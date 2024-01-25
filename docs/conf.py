@@ -12,7 +12,7 @@ import sphinx_compas_theme  # this is a temp solution
 
 # -- General configuration ------------------------------------------------
 
-project = "COMPAS pyhtreejs"
+project = "COMPAS pythreejs"
 copyright = "COMPAS Association"
 author = "tom van mele"
 
@@ -23,11 +23,7 @@ def get_latest_version():
         pattern = re.compile(r"## (Unreleased|\[\d+\.\d+\.\d+\])")
         versions = pattern.findall(content)
         latest_version = versions[0] if versions else None
-        if (
-            latest_version
-            and latest_version.startswith("[")
-            and latest_version.endswith("]")
-        ):
+        if latest_version and latest_version.startswith("[") and latest_version.endswith("]"):
             latest_version = latest_version[1:-1]
         return latest_version
 
@@ -176,7 +172,7 @@ def linkcode_resolve(domain, info):
         return None
 
     package = info["module"].split(".")[0]
-    if not package.startswith('compas_pyhtreejs'):
+    if not package.startswith("compas_pythreejs"):
         return None
 
     module = importlib.import_module(info["module"])
@@ -204,7 +200,7 @@ def linkcode_resolve(domain, info):
     else:
         return None
 
-    return f"https://github.com/compas-dev/compas_pyhtreejs/blob/master/src/{filename}.py#L{lineno}"
+    return f"https://github.com/compas-dev/compas_pythreejs/blob/master/src/{filename}.py#L{lineno}"
 
 
 # extlinks
@@ -249,14 +245,14 @@ replace(html5.HTML5Translator)
 
 html_theme = "sphinx_book_theme"
 html_logo = "_static/compas_icon.png"
-html_title = "COMPAS pyhtreejs"
+html_title = "COMPAS pythreejs"
 html_favicon = "_static/compas.ico"
 
 html_theme_options = {
     "use_download_button": False,
     "use_repository_button": True,
     "logo": {
-        "text": "COMPAS pyhtreejs",
+        "text": "COMPAS pythreejs",
         "image_light": "_static/compas_icon.png",
         "image_dark": "_static/compas_icon_white.png",
     },
@@ -273,7 +269,7 @@ html_sidebars = {
 html_context = {
     "github_url": "https://github.com",
     "github_user": "compas-dev",
-    "github_repo": "compas_pyhtreejs",
+    "github_repo": "compas_pythreejs",
     "github_version": "main",
     "doc_path": "docs",
 }

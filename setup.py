@@ -16,10 +16,7 @@ here = path.abspath(path.dirname(__file__))
 
 
 def read(*names, **kwargs):
-    return io.open(
-        path.join(here, *names),
-        encoding=kwargs.get("encoding", "utf8")
-    ).read()
+    return io.open(path.join(here, *names), encoding=kwargs.get("encoding", "utf8")).read()
 
 
 long_description = read("README.md")
@@ -27,12 +24,12 @@ requirements = read("requirements.txt").split("\n")
 optional_requirements = {}
 
 setup(
-    name="compas_pyhtreejs",
+    name="compas_pythreejs",
     version="0.1.0",
-    description="Notebook visualization backend for COMPAS using pyhtreejs",
+    description="Notebook visualization backend for COMPAS using pythreejs",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/compas-dev/compas_pyhtreejs",
+    url="https://github.com/compas-dev/compas_pythreejs",
     author="tom van mele",
     author_email="tom.v.mele@gmail.com",
     license="MIT license",
@@ -53,7 +50,7 @@ setup(
     ],
     keywords=[],
     project_urls={},
-    packages=["compas_pyhtreejs"],
+    packages=["compas_pythreejs"],
     package_dir={"": "src"},
     package_data={},
     data_files=[],

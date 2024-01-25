@@ -1,8 +1,8 @@
 ********************************************************************************
-compas_pyhtreejs
+compas_pythreejs
 ********************************************************************************
 
-.. currentmodule:: compas_pyhtreejs
+.. currentmodule:: compas_pythreejs
 
 
 .. toctree::

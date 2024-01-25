@@ -1,10 +1,10 @@
 ********************************************************************************
-compas_pyhtreejs
+compas_pythreejs
 ********************************************************************************
 
 .. rst-class:: lead
 
-Notebook visualization backend for COMPAS using pyhtreejs
+Notebook visualization backend for COMPAS using pythreejs
 
 .. .. figure:: /_images/
      :figclass: figure

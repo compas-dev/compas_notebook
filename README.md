@@ -1,6 +1,6 @@
-# COMPAS pyhtreejs
+# COMPAS pythreejs
 
-Notebook visualization backend for COMPAS using pyhtreejs
+Notebook visualization backend for COMPAS using pythreejs
 
 
 ## Getting started with this project
