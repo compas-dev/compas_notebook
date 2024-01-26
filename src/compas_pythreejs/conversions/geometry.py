@@ -20,7 +20,7 @@ def box_to_threejs(box: Box) -> BoxGeometry:
     >>> from compas.geometry import Box
     >>> box = Box.from_width_height_depth(1, 2, 3)
     >>> box_to_threejs(box)
-    BoxGeometry()
+    BoxGeometry(depth=3.0, height=2.0)
 
     """
     return BoxGeometry(width=box.width, height=box.height, depth=box.depth)
