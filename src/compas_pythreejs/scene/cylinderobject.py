@@ -1,21 +1,19 @@
 import pythreejs as three
-
 from compas.scene import GeometryObject
 from compas.colors import Color
-from compas_pythreejs.conversions import box_to_threejs
 from .sceneobject import ThreeSceneObject
 
 
-class BoxObject(ThreeSceneObject, GeometryObject):
-    """Scene object for drawing box shapes."""
+class CylinderObject(ThreeSceneObject, GeometryObject):
+    """Scene object for drawing cylinder."""
 
-    def draw(self, color=None):
-        """Draw the box associated with the scene object.
+    def draw(self, color: Color = None):
+        """Draw the cylinder associated with the scene object.
 
         Parameters
         ----------
         color : rgb1 | rgb255 | :class:`compas.colors.Color`, optional
-            The RGB color of the box.
+            The RGB color of the cylinder.
 
         Returns
         -------
@@ -23,13 +21,17 @@ class BoxObject(ThreeSceneObject, GeometryObject):
             List of pythreejs objects created.
 
         """
-        color = Color.coerce(color) or self.color
+        color: Color = Color.coerce(color) or self.color
         contrastcolor: Color = color.darkened(50) if color.is_light else color.lightened(50)
 
-        geometry = box_to_threejs(self.geometry)
+        cylinder = three.CylinderGeometry(
+            radiusTop=self.geometry.radius,
+            radiusBottom=self.geometry.radius,
+            height=self.geometry.height,
+        )
 
-        edges = three.EdgesGeometry(geometry)
-        mesh = three.Mesh(geometry, three.MeshBasicMaterial(color=color.hex))
+        edges = three.EdgesGeometry(cylinder)
+        mesh = three.Mesh(cylinder, three.MeshBasicMaterial(color=color.hex))
         line = three.LineSegments(edges, three.LineBasicMaterial(color=contrastcolor.hex))
 
         self._guids = [mesh, line]
