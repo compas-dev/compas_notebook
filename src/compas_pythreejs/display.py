@@ -1,4 +1,4 @@
-import pythreejs as THREE
+import pythreejs as three
 
 from IPython.display import display as ipydisplay
 
@@ -39,19 +39,20 @@ def display(objects, camera3=None, controls3=None, width=400, height=300, backgr
     aspect = width / height
 
     if not camera3:
-        camera3 = THREE.PerspectiveCamera(position=[0, 0, 10], up=[0, 1, 0], aspect=aspect)
+        camera3 = three.PerspectiveCamera(position=[0, 0, 10], up=[0, 1, 0], aspect=aspect)
 
     if not controls3:
-        controls3 = THREE.OrbitControls(controlling=camera3)
+        controls3 = three.OrbitControls(controlling=camera3)
 
     if not background:
         background = Color.white()
 
-    scene3 = THREE.Scene()
+    scene3 = three.Scene()
     for obj in objects:
         scene3.add(obj)
 
     camera3.lookAt(scene3.position)
-    renderer3 = THREE.Renderer(scene=scene3, camera=camera3, controls=[controls3], width=width, height=height)
+    renderer3 = three.Renderer(scene=scene3, camera=camera3, controls=[controls3], width=width, height=height)
 
+    # print(renderer3)
     ipydisplay(renderer3)
