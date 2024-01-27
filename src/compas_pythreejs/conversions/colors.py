@@ -12,7 +12,7 @@ def color_to_threejs(color: Color) -> MeshBasicMaterial:
 
     Returns
     -------
-    :class:`pythreejs.MeshBasicMaterial`
+    :class:`three.MeshBasicMaterial`
         The PyThreeJS material.
 
     Examples
