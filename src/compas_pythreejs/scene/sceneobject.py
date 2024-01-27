@@ -3,14 +3,7 @@ from compas.scene import SceneObject
 
 
 class ThreeSceneObject(SceneObject):
-    """Base class for all PyThreeJS scene objects.
-
-    Parameters
-    ----------
-    **kwargs : dict, optional
-        Additional keyword arguments.
-
-    """
+    """Base class for all PyThreeJS scene objects."""
 
     def geometry_to_objects(self, geometry, color, contrastcolor):
         """Convert a PyThreeJS geometry to a list of PyThreeJS objects.

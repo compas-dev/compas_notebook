@@ -48,7 +48,7 @@ def cone_to_threejs(cone: Cone) -> three.CylinderGeometry:
     >>> from compas.geometry import Cone
     >>> cone = Cone(radius=1, height=2)
     >>> cone_to_threejs(cone)
-    CylinderGeometry()
+    CylinderGeometry(height=2.0, radiusTop=0.0)
 
     """
     return three.CylinderGeometry(radiusTop=0, radiusBottom=cone.radius, height=cone.height)
@@ -72,7 +72,7 @@ def cylinder_to_threejs(cylinder: Cylinder) -> three.CylinderGeometry:
     >>> from compas.geometry import Cylinder
     >>> cylinder = Cylinder(radius=1, height=2)
     >>> cylinder_to_threejs(cylinder)
-    CylinderGeometry()
+    CylinderGeometry(height=2.0)
 
     """
     return three.CylinderGeometry(radiusTop=cylinder.radius, radiusBottom=cylinder.radius, height=cylinder.height)
@@ -118,9 +118,9 @@ def torus_to_threejs(torus: Torus) -> three.TorusGeometry:
     Examples
     --------
     >>> from compas.geometry import Torus
-    >>> torus = Torus(radius=1, thickness=0.2)
+    >>> torus = Torus(radius_axis=1, radius_pipe=0.2)
     >>> torus_to_threejs(torus)
-    TorusGeometry()
+    TorusGeometry(tube=0.2)
 
     """
     return three.TorusGeometry(radius=torus.radius_axis, tube=torus.radius_pipe)
