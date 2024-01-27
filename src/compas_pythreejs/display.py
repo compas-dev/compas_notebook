@@ -1,13 +1,9 @@
-from pythreejs import Scene as _Scene
-from pythreejs import PerspectiveCamera as _PerspectiveCamera
-from pythreejs import OrbitControls as _OrbitControls
-from pythreejs import Renderer as _Renderer
+import pythreejs as THREE
 
-from IPython.display import display as _display
+from IPython.display import display as ipydisplay
 
 from compas.plugins import plugin
 from compas.colors import Color
-from compas.scene import Scene
 
 
 @plugin(
@@ -15,7 +11,7 @@ from compas.scene import Scene
     pluggable_name="after_draw",
     requires=["pythreejs"],
 )
-def display(scene: Scene, camera=None, controls=None, width=400, height=300, background=None):
+def display(objects, camera3=None, controls3=None, width=400, height=300, background=None):
     """Display a scene in Jupyter Notebook.
 
     Parameters
@@ -42,22 +38,20 @@ def display(scene: Scene, camera=None, controls=None, width=400, height=300, bac
     height = height or 300
     aspect = width / height
 
-    if not camera:
-        camera = _PerspectiveCamera(position=[0, 0, 10], up=[0, 1, 0], aspect=aspect)
+    if not camera3:
+        camera3 = THREE.PerspectiveCamera(position=[0, 0, 10], up=[0, 1, 0], aspect=aspect)
 
-    if not controls:
-        controls = _OrbitControls(controlling=camera)
+    if not controls3:
+        controls3 = THREE.OrbitControls(controlling=camera3)
 
     if not background:
         background = Color.white()
 
-    _scene = _Scene()
-    for obj in scene.objects:
-        for item in obj.guids:
-            print(item)
-            _scene.add(item)
+    scene3 = THREE.Scene()
+    for obj in objects:
+        scene3.add(obj)
 
-    camera.lookAt(_scene.position)
-    renderer = _Renderer(scene=_scene, camera=camera, controls=[controls], width=width, height=height)
+    camera3.lookAt(scene3.position)
+    renderer3 = THREE.Renderer(scene=scene3, camera=camera3, controls=[controls3], width=width, height=height)
 
-    _display(renderer)
+    ipydisplay(renderer3)
