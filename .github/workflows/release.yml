@@ -23,11 +23,8 @@ jobs:
   Publish:
     needs: build
     runs-on: ubuntu-latest
-    permissions:
-      # IMPORTANT: this permission is mandatory for trusted publishing
-      id-token: write
     steps:
       - uses: compas-dev/compas-actions.publish@v2
-        # with:
-        #   pypi_token: ${{ secrets.PYPI }}
-        #   github_token: ${{ secrets.TOKEN }}
+        with:
+          pypi_token: ${{ secrets.PYPI }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
