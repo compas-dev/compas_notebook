@@ -1,11 +1,12 @@
 ********************************************************************************
-compas_pythreejs
+compas_notebook.conversions
 ********************************************************************************
 
-.. currentmodule:: compas_pythreejs
+.. currentmodule:: compas_notebook.conversions
 
+Functions
+=========
 
-.. toctree::
-    :maxdepth: 1
-
-    compas_pythreejs.scene
+.. autosummary::
+    :toctree: generated/
+    :nosignatures:
