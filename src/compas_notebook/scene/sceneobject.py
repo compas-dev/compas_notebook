@@ -24,6 +24,6 @@ class ThreeSceneObject(SceneObject):
 
         """
         edges = three.EdgesGeometry(geometry)
-        mesh = three.Mesh(geometry, three.MeshBasicMaterial(color=color.hex))
+        mesh = three.Mesh(geometry, three.MeshBasicMaterial(color=color.hex, side="DoubleSide"))
         line = three.LineSegments(edges, three.LineBasicMaterial(color=contrastcolor.hex))
         return [mesh, line]

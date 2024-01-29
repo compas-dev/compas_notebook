@@ -4,6 +4,7 @@ from compas.geometry import Cone
 from compas.geometry import Cylinder
 from compas.geometry import Sphere
 from compas.geometry import Torus
+from compas.geometry import Polyhedron
 
 
 def box_to_threejs(box: Box) -> three.BoxGeometry:
@@ -124,3 +125,7 @@ def torus_to_threejs(torus: Torus) -> three.TorusGeometry:
 
     """
     return three.TorusGeometry(radius=torus.radius_axis, tube=torus.radius_pipe)
+
+
+def polyhedron_to_threejs(polyhedron: Polyhedron) -> three.BufferGeometry:
+    raise NotImplementedError

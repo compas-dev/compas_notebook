@@ -1,6 +1,6 @@
 from compas.scene import GeometryObject
 from compas.colors import Color
-from compas_pythreejs.conversions import sphere_to_threejs
+from compas_notebook.conversions import sphere_to_threejs
 from .sceneobject import ThreeSceneObject
 
 

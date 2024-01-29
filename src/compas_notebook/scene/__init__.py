@@ -70,6 +70,15 @@ def redraw_pythreejs():
     pass
 
 
+@plugin(
+    category="drawing-utils",
+    pluggable_name="after_draw",
+    requires=["pythreejs"],
+)
+def after_draw(sceneobjects):
+    pass
+
+
 @plugin(category="factories", requires=["pythreejs"])
 def register_scene_objects():
     # register(Circle, CircleObject, context="Notebook")

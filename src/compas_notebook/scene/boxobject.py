@@ -2,7 +2,7 @@ import pythreejs as three
 
 from compas.scene import GeometryObject
 from compas.colors import Color
-from compas_pythreejs.conversions import box_to_threejs
+from compas_notebook.conversions import box_to_threejs
 from .sceneobject import ThreeSceneObject
 
 
