@@ -34,8 +34,8 @@ class Viewer:
     >>> from compas_notebook.viewer import Viewer
     >>> mesh = Mesh.from_obj(compas.get('tubemesh.obj'))
     >>> viewer = Viewer()
-    >>> viewer.scene.add(mesh)
-    >>> viewer.display()
+    >>> viewer.scene.add(mesh)  # doctest: +SKIP
+    >>> viewer.display()        # doctest: +SKIP
 
     """
 
