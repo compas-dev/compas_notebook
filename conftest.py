@@ -1,6 +1,6 @@
 import pytest
 import compas
-import compas_pythreejs
+import compas_notebook
 import math
 import numpy
 
@@ -22,8 +22,8 @@ def add_compas(doctest_namespace):
 
 
 @pytest.fixture(autouse=True)
-def add_compas_pythreejs(doctest_namespace):
-    doctest_namespace["compas_pythreejs"] = compas_pythreejs
+def add_compas_notebook(doctest_namespace):
+    doctest_namespace["compas_notebook"] = compas_notebook
 
 
 @pytest.fixture(autouse=True)

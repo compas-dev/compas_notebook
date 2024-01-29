@@ -26,8 +26,8 @@ ns.configure(
     {
         "base_folder": os.path.dirname(__file__),
         "ghuser": {
-            "source_dir": "src/compas_pythreejs/ghpython/components",
-            "target_dir": "src/compas_pythreejs/ghpython/components/ghuser",
+            "source_dir": "src/compas_notebook/ghpython/components",
+            "target_dir": "src/compas_notebook/ghpython/components/ghuser",
         },
     }
 )

@@ -24,12 +24,12 @@ requirements = read("requirements.txt").split("\n")
 optional_requirements = {}
 
 setup(
-    name="compas_pythreejs",
+    name="compas_notebook",
     version="0.2.4",
     description="Notebook visualization backend for COMPAS using pythreejs",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/compas-dev/compas_pythreejs",
+    url="https://github.com/compas-dev/compas_notebook",
     author="tom van mele",
     author_email="tom.v.mele@gmail.com",
     license="MIT license",
@@ -50,7 +50,7 @@ setup(
     ],
     keywords=[],
     project_urls={},
-    packages=["compas_pythreejs"],
+    packages=["compas_notebook"],
     package_dir={"": "src"},
     package_data={},
     data_files=[],

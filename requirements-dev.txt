@@ -7,6 +7,7 @@ doc8
 flake8
 invoke >=0.14
 isort
+nbsphinx
 sphinx_compas2_theme
 twine
 wheel

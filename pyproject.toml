@@ -3,7 +3,7 @@ line-length = 180
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-testpaths = ["tests", "src/compas_pythreejs"]
+testpaths = ["tests", "src/compas_notebook"]
 python_files = ["test_*.py", "tests.py"]
 addopts = "-ra --strict --doctest-modules --doctest-glob=*.rst --tb=short"
 doctest_optionflags = "NORMALIZE_WHITESPACE IGNORE_EXCEPTION_DETAIL ALLOW_UNICODE ALLOW_BYTES NUMBER"
@@ -17,7 +17,7 @@ force_grid_wrap = 0
 use_parentheses = true
 force_single_line = true
 ensure_newline_before_comments = true
-known_first_party = "compas_pythreejs"
+known_first_party = "compas_notebook"
 default_section = "THIRDPARTY"
-forced_separate = "test_compas_pythreejs"
+forced_separate = "test_compas_notebook"
 skip = ["__init__.py"]

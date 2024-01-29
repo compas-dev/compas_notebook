@@ -6,10 +6,10 @@ import sphinx_compas2_theme
 
 # -- General configuration ------------------------------------------------
 
-project = "COMPAS PyThreeJS"
+project = "COMPAS Notebook"
 copyright = "COMPAS Association"
 author = "Tom Van Mele"
-package = "compas_pythreejs"
+package = "compas_notebook"
 organization = "compas-dev"
 
 master_doc = "index"
