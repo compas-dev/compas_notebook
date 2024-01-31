@@ -13,8 +13,8 @@ from .meshes import vertices_to_threejs
 
 
 __all__ = [
-    "color_to_threejs",
     "box_to_threejs",
+    "color_to_threejs",
     "cone_to_threejs",
     "cylinder_to_threejs",
     "polyhedron_to_threejs",
