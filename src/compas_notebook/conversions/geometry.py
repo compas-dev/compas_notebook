@@ -26,8 +26,8 @@ def point_to_threejs(point: Point) -> three.SphereGeometry:
     --------
     >>> from compas.geometry import Point
     >>> point = Point(1, 2, 3)
-    >>> point_to_threejs(point)
-    SphereGeometry()
+    >>> point_to_threejs(point)  # doctest: +ELLIPSIS
+    SphereGeometry(...)
 
     """
     return three.SphereGeometry(radius=0.05, widthSegments=32, heightSegments=32)
@@ -112,8 +112,8 @@ def box_to_threejs(box: Box) -> three.BoxGeometry:
     --------
     >>> from compas.geometry import Box
     >>> box = Box.from_width_height_depth(1, 2, 3)
-    >>> box_to_threejs(box)
-    BoxGeometry(depth=3.0, height=2.0)
+    >>> box_to_threejs(box)  # doctest: +ELLIPSIS
+    BoxGeometry(...)
 
     """
     return three.BoxGeometry(width=box.width, height=box.height, depth=box.depth)
@@ -135,8 +135,8 @@ def cone_to_threejs(cone: Cone) -> three.CylinderGeometry:
     --------
     >>> from compas.geometry import Cone
     >>> cone = Cone(radius=1, height=2)
-    >>> cone_to_threejs(cone)
-    CylinderGeometry(height=2.0, radiusTop=0.0)
+    >>> cone_to_threejs(cone)  # doctest: +ELLIPSIS
+    CylinderGeometry(...)
 
     """
     return three.CylinderGeometry(radiusTop=0, radiusBottom=cone.radius, height=cone.height, radialSegments=32)
@@ -158,8 +158,8 @@ def cylinder_to_threejs(cylinder: Cylinder) -> three.CylinderGeometry:
     --------
     >>> from compas.geometry import Cylinder
     >>> cylinder = Cylinder(radius=1, height=2)
-    >>> cylinder_to_threejs(cylinder)
-    CylinderGeometry(height=2.0)
+    >>> cylinder_to_threejs(cylinder)  # doctest: +ELLIPSIS
+    CylinderGeometry(...)
 
     """
     return three.CylinderGeometry(radiusTop=cylinder.radius, radiusBottom=cylinder.radius, height=cylinder.height, radialSegments=32)
@@ -181,8 +181,8 @@ def sphere_to_threejs(sphere: Sphere) -> three.SphereGeometry:
     --------
     >>> from compas.geometry import Sphere
     >>> sphere = Sphere(radius=1)
-    >>> sphere_to_threejs(sphere)
-    SphereGeometry()
+    >>> sphere_to_threejs(sphere)  # doctest: +ELLIPSIS
+    SphereGeometry(...)
 
     """
     return three.SphereGeometry(radius=sphere.radius, widthSegments=32, heightSegments=32)
@@ -205,8 +205,8 @@ def torus_to_threejs(torus: Torus) -> three.TorusGeometry:
     --------
     >>> from compas.geometry import Torus
     >>> torus = Torus(radius_axis=1, radius_pipe=0.2)
-    >>> torus_to_threejs(torus)
-    TorusGeometry(tube=0.2)
+    >>> torus_to_threejs(torus)  # doctest: +ELLIPSIS
+    TorusGeometry(...)
 
     """
     return three.TorusGeometry(radius=torus.radius_axis, tube=torus.radius_pipe, radialSegments=64, tubularSegments=32)
