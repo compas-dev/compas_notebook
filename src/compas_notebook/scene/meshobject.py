@@ -38,8 +38,12 @@ class MeshObject(ThreeSceneObject, MeshObject):
         geometry = vertices_and_edges_to_threejs(vertices, edges)
         line = three.LineSegments(geometry, three.LineBasicMaterial(color=contrastcolor.hex))
 
-        geometry = vertices_to_threejs(vertices)
-        points = three.Points(geometry, three.PointsMaterial(size=0.1, color=contrastcolor.hex))
+        guids = [mesh, line]
 
-        self._guids = [mesh, line, points]
+        if self.show_vertices:
+            geometry = vertices_to_threejs(vertices)
+            points = three.Points(geometry, three.PointsMaterial(size=0.1, color=contrastcolor.hex))
+            guids.append(points)
+
+        self._guids = guids
         return self.guids
