@@ -6,6 +6,7 @@ prune docs
 prune scripts
 prune tests
 prune temp
+prune notebooks
 
 include LICENSE
 include README.md
