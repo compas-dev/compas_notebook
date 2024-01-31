@@ -16,7 +16,7 @@ class Viewer:
         A scene object.
     camera : dict, optional
         A dictionary of camera parameters.
-        Valid keys are ``position``, ``up``, ``near``, ``far``, ``fov``.
+        Valid keys are ``position``, ``target``, ``up``, ``near``, ``far``, ``fov``.
     width : int, optional
         Width of the viewer scene.
     height : int, optional
@@ -29,6 +29,8 @@ class Viewer:
         Show axes in the scene.
     show_toolbar : bool, optional
         Show the toolbar.
+    show_statusbar : bool, optional
+        Show the statusbar.
     viewport : {'top', 'left', 'front', 'perspective'}, optional
         The viewport of the viewer.
 
@@ -56,6 +58,7 @@ class Viewer:
         show_grid: bool = True,
         show_axes: bool = True,
         show_toolbar: bool = True,
+        show_statusbar: bool = True,
         viewport: Literal["top", "left", "front", "perspective"] = "perspective",
     ):
         aspect = width / height
@@ -69,8 +72,10 @@ class Viewer:
         self.show_grid = show_grid
         self.show_axes = show_axes
         self.show_toolbar = show_toolbar
+        self.show_statusbar = show_statusbar
 
         self.scene = scene or Scene(context="Notebook")
+        self.status = None
 
         # scene
 
@@ -122,45 +127,9 @@ class Viewer:
 
         self.init_ui()
 
-    def init_ui(self):
-        """Initialize the user interface."""
-        self.ui = widgets.VBox()
-        self.ui.layout.width = "auto"
-        self.ui.layout.height = f"{self.height + 4 + 48}px" if self.show_toolbar else f"{self.height + 4}px"
-
-        self.main = widgets.Box()
-        self.main.layout.width = "auto"
-        self.main.layout.height = f"{self.height + 4}px"
-        self.main.children = [self.renderer3]
-
-        self.toolbar = None
-        if self.show_toolbar:
-            self.toolbar = self.make_toolbar()
-            self.ui.children = [self.toolbar, self.main]
-        else:
-            self.toolbar = None
-            self.ui.children = [self.main]
-
-    def make_toolbar(self):
-        """Initialize the toolbar."""
-        zoom_extents_button = widgets.Button(icon="square", tooltip="Zoom extents", layout=widgets.Layout(width="32px", height="32px"))
-        zoom_extents_button.on_click(lambda x: self.zoom_extents())
-
-        zoom_in_button = widgets.Button(icon="search-plus", tooltip="Zoom in", layout=widgets.Layout(width="32px", height="32px"))
-        zoom_in_button.on_click(lambda x: self.zoom_in())
-
-        zoom_out_button = widgets.Button(icon="search-minus", tooltip="Zoom out", layout=widgets.Layout(width="32px", height="32px"))
-        zoom_out_button.on_click(lambda x: self.zoom_out())
-
-        toolbar = widgets.HBox()
-        toolbar.layout.display = "flex"
-        toolbar.layout.flex_flow = "row"
-        toolbar.layout.align_items = "center"
-        toolbar.layout.width = "auto"
-        toolbar.layout.height = "48px"
-        toolbar.children = [zoom_extents_button, zoom_in_button, zoom_out_button]
-
-        return toolbar
+    # =============================================================================
+    # System methods
+    # =============================================================================
 
     def show(self):
         """Display the viewer in the notebook."""
@@ -170,8 +139,113 @@ class Viewer:
                 self.scene3.add(o3)
         ipydisplay(self.ui)
 
+    # =============================================================================
+    # UI
+    # =============================================================================
+
+    def init_ui(self):
+        """Initialize the user interface."""
+        self.ui = widgets.VBox()
+        self.ui.layout.width = "auto"
+        height = self.height
+
+        self.main = widgets.Box()
+        self.main.layout.width = "auto"
+        self.main.layout.height = f"{self.height + 4}px"
+        self.main.children = [self.renderer3]
+
+        children = []
+
+        self.toolbar = None
+        if self.show_toolbar:
+            self.toolbar = self.make_toolbar()
+            children.append(self.toolbar)
+            height += 48
+
+        children.append(self.main)
+
+        self.statusbar = None
+        if self.show_statusbar:
+            self.statusbar = self.make_statusbar()
+            children.append(self.statusbar)
+            height += 48
+
+        self.ui.layout.height = f"{height + 4}px"
+        self.ui.children = children
+
+    def make_statusbar(self):
+        """Initialize the status bar."""
+        statustext = widgets.Text(value="", placeholder="...", description="", disabled=True)
+        statustext.layout.width = "100%"
+        statustext.layout.height = "32px"
+        statustext.layout.padding = "0px 0px 0px 0px"
+        statustext.layout.margin = "0px 0px 0px 0px"
+        statustext.style.background = "#eeeeee"
+
+        self.status = statustext
+
+        statusbar = widgets.HBox()
+        statusbar.layout.display = "flex"
+        statusbar.layout.flex_flow = "row"
+        statusbar.layout.align_items = "flex-start"
+        statusbar.layout.width = "auto"
+        statusbar.layout.height = "48px"
+        statusbar.layout.padding = "0px 0px 0px 0px"
+        statusbar.layout.margin = "0px 0px 0px 0px"
+        statusbar.children = [statustext]
+
+        return statusbar
+
+    def make_toolbar(self):
+        """Initialize the toolbar."""
+        load_scene_button = widgets.Button(icon="folder-open", tooltip="Load scene", layout=widgets.Layout(width="48px", height="32px"))
+        load_scene_button.on_click(lambda x: self.load_scene())
+
+        save_scene_button = widgets.Button(icon="save", tooltip="Load scene", layout=widgets.Layout(width="48px", height="32px"))
+        save_scene_button.on_click(lambda x: self.save_scene())
+
+        zoom_extents_button = widgets.Button(icon="square", tooltip="Zoom extents", layout=widgets.Layout(width="48px", height="32px"))
+        zoom_extents_button.on_click(lambda x: self.zoom_extents())
+
+        zoom_in_button = widgets.Button(icon="search-plus", tooltip="Zoom in", layout=widgets.Layout(width="48px", height="32px"))
+        zoom_in_button.on_click(lambda x: self.zoom_in())
+
+        zoom_out_button = widgets.Button(icon="search-minus", tooltip="Zoom out", layout=widgets.Layout(width="48px", height="32px"))
+        zoom_out_button.on_click(lambda x: self.zoom_out())
+
+        toolbar = widgets.HBox()
+        toolbar.layout.display = "flex"
+        toolbar.layout.flex_flow = "row"
+        toolbar.layout.align_items = "center"
+        toolbar.layout.width = "auto"
+        toolbar.layout.height = "48px"
+        toolbar.layout.padding = "0px 0px 0px 0px"
+        toolbar.layout.margin = "0px 0px 0px 0px"
+        toolbar.children = [load_scene_button, save_scene_button, zoom_extents_button, zoom_in_button, zoom_out_button]
+
+        return toolbar
+
+    # =============================================================================
+    # Actions
+    # =============================================================================
+
+    def set_statustext(self, text):
+        """Set the text of the status bar."""
+        if self.status:
+            self.status.value = text
+
+    def load_scene(self):
+        """Load a scene from file."""
+        self.set_statustext("Loading scene...")
+
+    def save_scene(self):
+        """Save the scene to file."""
+        self.set_statustext("Saving scene...")
+
     def zoom_extents(self):
         """Zoom to the extents of the scene."""
+        self.set_statustext("Zoom extents...")
+
         xmin = ymin = zmin = +1e12
         xmax = ymax = zmax = -1e12
         for obj in self.scene.objects:
@@ -209,8 +283,12 @@ class Viewer:
 
     def zoom_in(self):
         """Zoom in."""
+        self.set_statustext("Zoom in...")
+
         self.camera3.zoom *= 2
 
     def zoom_out(self):
         """Zoom out."""
+        self.set_statustext("Zoom out...")
+
         self.camera3.zoom /= 2
