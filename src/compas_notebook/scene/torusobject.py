@@ -24,10 +24,16 @@ class TorusObject(ThreeSceneObject, GeometryObject):
         color: Color = Color.coerce(color) or self.color
         contrastcolor: Color = color.darkened(50) if color.is_light else color.lightened(50)
 
-        torus = three.TorusGeometry(
+        geometry = three.TorusGeometry(
             radius=self.geometry.radius_axis,
             tube=self.geometry.radius_pipe,
         )
+        transformation = self.y_to_z(self.geometry.transformation)
 
-        self._guids = self.geometry_to_objects(torus, color, contrastcolor)
+        self._guids = self.geometry_to_objects(
+            geometry,
+            color,
+            contrastcolor,
+            transformation=transformation,
+        )
         return self.guids

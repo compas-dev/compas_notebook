@@ -25,6 +25,12 @@ class SphereObject(ThreeSceneObject, GeometryObject):
         contrastcolor: Color = color.darkened(50) if color.is_light else color.lightened(50)
 
         geometry = sphere_to_threejs(self.geometry)
+        transformation = self.y_to_z(self.geometry.transformation)
 
-        self._guids = self.geometry_to_objects(geometry, color, contrastcolor)
+        self._guids = self.geometry_to_objects(
+            geometry,
+            color,
+            contrastcolor,
+            transformation=transformation,
+        )
         return self.guids

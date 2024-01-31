@@ -2,13 +2,102 @@ import pythreejs as three
 from compas.geometry import Box
 from compas.geometry import Cone
 from compas.geometry import Cylinder
+from compas.geometry import Point
+from compas.geometry import Polygon
+from compas.geometry import Polyhedron
+from compas.geometry import Polyline
 from compas.geometry import Sphere
 from compas.geometry import Torus
-from compas.geometry import Polyhedron
+
+
+def point_to_threejs(point: Point) -> three.SphereGeometry:
+    """Convert a COMPAS point to PyThreeJS.
+
+    Parameters
+    ----------
+    point : :class:`compas.geometry.Point`
+        The point to convert.
+
+    Returns
+    -------
+    :class:`three.SphereGeometry`
+
+    Examples
+    --------
+    >>> from compas.geometry import Point
+    >>> point = Point(1, 2, 3)
+    >>> point_to_threejs(point)
+    SphereGeometry()
+
+    """
+    return three.SphereGeometry(radius=0.05, widthSegments=32, heightSegments=32)
+
+
+def line_to_threejs(line: Point) -> three.BufferGeometry:
+    """Convert a COMPAS line to PyThreeJS.
+
+    Parameters
+    ----------
+    line : :class:`compas.geometry.Line`
+        The line to convert.
+
+    Returns
+    -------
+    :class:`three.BufferGeometry`
+
+    """
+    geometry = three.BufferGeometry(
+        attributes={
+            "position": three.BufferAttribute([line.start, line.end], normalized=False),
+        }
+    )
+    return geometry
+
+
+def polyline_to_threejs(polyline: Polyline) -> three.BufferGeometry:
+    """Convert a COMPAS polyline to PyThreeJS.
+
+    Parameters
+    ----------
+    polyline : :class:`compas.geometry.Polyline`
+        The polyline to convert.
+
+    Returns
+    -------
+    :class:`three.BufferGeometry`
+
+    """
+    geometry = three.BufferGeometry(
+        attributes={
+            "position": three.BufferAttribute(polyline.points, normalized=False),
+        }
+    )
+    return geometry
+
+
+def polygon_to_threejs(polygon: Polygon) -> three.BufferGeometry:
+    """Convert a COMPAS polygon to PyThreeJS.
+
+    Parameters
+    ----------
+    polygon : :class:`compas.geometry.Polygon`
+        The polygon to convert.
+
+    Returns
+    -------
+    :class:`three.BufferGeometry`
+
+    """
+    geometry = three.BufferGeometry(
+        attributes={
+            "position": three.BufferAttribute(polygon.points, normalized=False),
+        }
+    )
+    return geometry
 
 
 def box_to_threejs(box: Box) -> three.BoxGeometry:
-    """Convert a COMPAS box to a PyThreeJS box geometry.
+    """Convert a COMPAS box to PyThreeJS.
 
     Parameters
     ----------
@@ -18,7 +107,6 @@ def box_to_threejs(box: Box) -> three.BoxGeometry:
     Returns
     -------
     :class:`three.BoxGeometry`
-        The PyThreeJS box geometry.
 
     Examples
     --------
@@ -32,7 +120,7 @@ def box_to_threejs(box: Box) -> three.BoxGeometry:
 
 
 def cone_to_threejs(cone: Cone) -> three.CylinderGeometry:
-    """Convert a COMPAS cone to a PyThreeJS cone geometry.
+    """Convert a COMPAS cone to PyThreeJS.
 
     Parameters
     ----------
@@ -42,7 +130,6 @@ def cone_to_threejs(cone: Cone) -> three.CylinderGeometry:
     Returns
     -------
     :class:`three.CylinderGeometry`
-        The PyThreeJS cone geometry.
 
     Examples
     --------
@@ -52,11 +139,11 @@ def cone_to_threejs(cone: Cone) -> three.CylinderGeometry:
     CylinderGeometry(height=2.0, radiusTop=0.0)
 
     """
-    return three.CylinderGeometry(radiusTop=0, radiusBottom=cone.radius, height=cone.height)
+    return three.CylinderGeometry(radiusTop=0, radiusBottom=cone.radius, height=cone.height, radialSegments=32)
 
 
 def cylinder_to_threejs(cylinder: Cylinder) -> three.CylinderGeometry:
-    """Convert a COMPAS cylinder to a PyThreeJS cylinder geometry.
+    """Convert a COMPAS cylinder to PyThreeJS.
 
     Parameters
     ----------
@@ -66,7 +153,6 @@ def cylinder_to_threejs(cylinder: Cylinder) -> three.CylinderGeometry:
     Returns
     -------
     :class:`three.CylinderGeometry`
-        The PyThreeJS cylinder geometry.
 
     Examples
     --------
@@ -76,11 +162,11 @@ def cylinder_to_threejs(cylinder: Cylinder) -> three.CylinderGeometry:
     CylinderGeometry(height=2.0)
 
     """
-    return three.CylinderGeometry(radiusTop=cylinder.radius, radiusBottom=cylinder.radius, height=cylinder.height)
+    return three.CylinderGeometry(radiusTop=cylinder.radius, radiusBottom=cylinder.radius, height=cylinder.height, radialSegments=32)
 
 
 def sphere_to_threejs(sphere: Sphere) -> three.SphereGeometry:
-    """Convert a COMPAS sphere to a PyThreeJS sphere geometry.
+    """Convert a COMPAS sphere to PyThreeJS.
 
     Parameters
     ----------
@@ -90,7 +176,6 @@ def sphere_to_threejs(sphere: Sphere) -> three.SphereGeometry:
     Returns
     -------
     :class:`three.SphereGeometry`
-        The PyThreeJS sphere geometry.
 
     Examples
     --------
@@ -100,7 +185,7 @@ def sphere_to_threejs(sphere: Sphere) -> three.SphereGeometry:
     SphereGeometry()
 
     """
-    return three.SphereGeometry(radius=sphere.radius)
+    return three.SphereGeometry(radius=sphere.radius, widthSegments=32, heightSegments=32)
 
 
 def torus_to_threejs(torus: Torus) -> three.TorusGeometry:
@@ -124,7 +209,7 @@ def torus_to_threejs(torus: Torus) -> three.TorusGeometry:
     TorusGeometry(tube=0.2)
 
     """
-    return three.TorusGeometry(radius=torus.radius_axis, tube=torus.radius_pipe)
+    return three.TorusGeometry(radius=torus.radius_axis, tube=torus.radius_pipe, radialSegments=64, tubularSegments=32)
 
 
 def polyhedron_to_threejs(polyhedron: Polyhedron) -> three.BufferGeometry:

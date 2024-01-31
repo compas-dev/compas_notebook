@@ -9,52 +9,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-### Changed
-
-### Removed
-
-
-## [0.2.4] 2024-01-27
-
-### Added
-
-### Changed
-
-### Removed
-
-
-## [0.2.3] 2024-01-27
-
-### Added
+* `compas_notebook.conversions.color_to_threejs`.
+* `compas_notebook.conversions.box_to_threejs`.
+* `compas_notebook.conversions.cone_to_threejs`.
+* `compas_notebook.conversions.cylinder_to_threejs`.
+* `compas_notebook.conversions.polyhedron_to_threejs`.
+* `compas_notebook.conversions.sphere_to_threejs`.
+* `compas_notebook.conversions.torus_to_threejs`.
+* `compas_notebook.scene.BoxObject`.
+* `compas_notebook.scene.ConeObject`.
+* `compas_notebook.scene.CylinderObject`.
+* `compas_notebook.scene.MeshObject`.
+* `compas_notebook.scene.PolyhedronObject`.
+* `compas_notebook.scene.SphereObject`.
+* `compas_notebook.scene.TorusObject`.
+* `compas_notebook.viewer.Viewer`.
 
 ### Changed
 
 ### Removed
-
-
-## [0.2.2] 2024-01-27
-
-### Added
-
-### Changed
-
-### Removed
-
-
-## [0.2.1] 2024-01-27
-
-### Added
-
-### Changed
-
-### Removed
-
-
-## [0.2.0] 2024-01-26
-
-### Added
-
-### Changed
-
-### Removed
-

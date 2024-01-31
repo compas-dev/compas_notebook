@@ -1,8 +1,6 @@
 import pythreejs as three
 import numpy
 
-# from compas.datastructures import Mesh
-
 
 def vertices_and_faces_to_threejs(vertices, faces) -> three.BufferGeometry:
     """Convert vertices and faces to a PyThreeJS geometry.
@@ -96,26 +94,3 @@ def vertices_to_threejs(vertices) -> three.BufferGeometry:
     vertices = numpy.array(vertices, dtype=numpy.float32)
     geometry = three.BufferGeometry(attributes={"position": three.BufferAttribute(vertices, normalized=False)})
     return geometry
-
-
-# if show_points:
-#     vertices = []
-#     for v in vertex:
-#         xyz = vertex_attributes(v, 'xyz')
-#         vertices.append(xyz)
-
-#     vertices = THREE.BufferAttribute(
-#         array=np.array(vertices, dtype=np.float32), normalized=False)
-
-#     geometry = THREE.BufferGeometry(attributes={'position': vertices})
-#     three_mesh.add(THREE.Points(geometry, THREE.PointsMaterial(color=pointcolor.hex, size=pointsize)))
-
-# if show_lines:
-#     vertices = []
-#     for edge in mesh.edges():
-#         start = vertex_attributes(edge[0], 'xyz')
-#         end = vertex_attributes(edge[1], 'xyz')
-#         vertices.append([start, end])
-
-#     geometry = THREE.LineSegmentsGeometry(positions=vertices)
-#     three_mesh.add(THREE.LineSegments2(geometry, THREE.LineMaterial(color=linecolor.hex, linewidth=linewidth)))

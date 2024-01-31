@@ -1,5 +1,3 @@
-import pythreejs as three
-
 from compas.scene import GeometryObject
 from compas.colors import Color
 from compas_notebook.conversions import box_to_threejs
@@ -27,10 +25,13 @@ class BoxObject(ThreeSceneObject, GeometryObject):
         contrastcolor: Color = color.darkened(50) if color.is_light else color.lightened(50)
 
         geometry = box_to_threejs(self.geometry)
+        transformation = self.y_to_z(self.geometry.transformation)
 
-        edges = three.EdgesGeometry(geometry)
-        mesh = three.Mesh(geometry, three.MeshBasicMaterial(color=color.hex))
-        line = three.LineSegments(edges, three.LineBasicMaterial(color=contrastcolor.hex))
+        self._guids = self.geometry_to_objects(
+            geometry,
+            color,
+            contrastcolor,
+            transformation=transformation,
+        )
 
-        self._guids = [mesh, line]
         return self.guids

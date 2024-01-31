@@ -24,15 +24,19 @@ class CylinderObject(ThreeSceneObject, GeometryObject):
         color: Color = Color.coerce(color) or self.color
         contrastcolor: Color = color.darkened(50) if color.is_light else color.lightened(50)
 
-        cylinder = three.CylinderGeometry(
+        geometry = three.CylinderGeometry(
             radiusTop=self.geometry.radius,
             radiusBottom=self.geometry.radius,
             height=self.geometry.height,
+            radialSegments=32,
         )
 
-        edges = three.EdgesGeometry(cylinder)
-        mesh = three.Mesh(cylinder, three.MeshBasicMaterial(color=color.hex))
-        line = three.LineSegments(edges, three.LineBasicMaterial(color=contrastcolor.hex))
+        transformation = self.y_to_z(self.geometry.transformation)
 
-        self._guids = [mesh, line]
+        self._guids = self.geometry_to_objects(
+            geometry,
+            color,
+            contrastcolor,
+            transformation=transformation,
+        )
         return self.guids

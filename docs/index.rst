@@ -6,24 +6,24 @@ compas_notebook
 
 Notebook visualization backend for COMPAS using pythreejs
 
-.. .. figure:: /_images/
-     :figclass: figure
-     :class: figure-img img-fluid
+.. figure:: /_images/compas_notebook.png
+    :figclass: figure
+    :class: figure-img img-fluid
 
 
 Table of Contents
 =================
 
 .. toctree::
-   :maxdepth: 3
-   :titlesonly:
+    :maxdepth: 3
+    :titlesonly:
 
-   Introduction <self>
-   installation
-   tutorial
-   examples
-   api
-   license
+    Introduction <self>
+    installation
+    tutorial
+    examples
+    api
+    license
 
 
 Indices and tables
