@@ -12,6 +12,7 @@ Classes
     :nosignatures:
 
     compas_notebook.scene.BoxObject
+    compas_notebook.scene.BrepObject
     compas_notebook.scene.ConeObject
     compas_notebook.scene.CylinderObject
     compas_notebook.scene.MeshObject
