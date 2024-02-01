@@ -54,7 +54,7 @@ class Viewer:
         camera: dict = None,
         width: int = 1100,
         height: int = 580,
-        background: Color = None,
+        background: Color = Color.from_hex("#eeeeee"),
         show_grid: bool = True,
         show_axes: bool = True,
         show_toolbar: bool = True,
@@ -62,7 +62,7 @@ class Viewer:
         viewport: Literal["top", "left", "front", "perspective"] = "perspective",
     ):
         aspect = width / height
-        background = Color.coerce(background) or Color.from_hex("#eeeeee")
+        background = background
         camera = camera or {}
 
         self.width = width
