@@ -56,7 +56,7 @@ class Viewer:
         height: int = 580,
         background: Color = Color.from_hex("#eeeeee"),
         show_grid: bool = True,
-        show_axes: bool = True,
+        show_axes: bool = False,
         show_toolbar: bool = True,
         show_statusbar: bool = True,
         viewport: Literal["top", "left", "front", "perspective"] = "perspective",

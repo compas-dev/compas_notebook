@@ -24,7 +24,7 @@ from compas.geometry import Torus
 
 # from compas.geometry import Curve
 # from compas.geometry import Surface
-# from compas.geometry import Brep
+from compas.geometry import Brep
 
 from compas.datastructures import Mesh
 
@@ -57,7 +57,7 @@ from .meshobject import MeshObject
 
 # from .curveobject import CurveObject
 # from .surfaceobject import SurfaceObject
-# from .brepobject import BrepObject
+from .brepobject import BrepObject
 
 
 @plugin(category="drawing-utils", pluggable_name="clear", requires=["pythreejs"])
@@ -101,7 +101,7 @@ def register_scene_objects():
     # register(VolMesh, VolMeshObject, context="Notebook")
     # register(Curve, CurveObject, context="Notebook")
     # register(Surface, SurfaceObject, context="Notebook")
-    # register(Brep, BrepObject, context="Notebook")
+    register(Brep, BrepObject, context="Notebook")
     print("PyThreeJS SceneObjects registered.")
 
 

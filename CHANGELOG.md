@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* Added `compas_notebook.scene.BrepObject`.
+* Added `compas_notebook.conversions.polyline_to_threejs`.
+
 ### Changed
 
 ### Removed
@@ -27,21 +30,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-* `compas_notebook.conversions.color_to_threejs`.
-* `compas_notebook.conversions.box_to_threejs`.
-* `compas_notebook.conversions.cone_to_threejs`.
-* `compas_notebook.conversions.cylinder_to_threejs`.
-* `compas_notebook.conversions.polyhedron_to_threejs`.
-* `compas_notebook.conversions.sphere_to_threejs`.
-* `compas_notebook.conversions.torus_to_threejs`.
-* `compas_notebook.scene.BoxObject`.
-* `compas_notebook.scene.ConeObject`.
-* `compas_notebook.scene.CylinderObject`.
-* `compas_notebook.scene.MeshObject`.
-* `compas_notebook.scene.PolyhedronObject`.
-* `compas_notebook.scene.SphereObject`.
-* `compas_notebook.scene.TorusObject`.
-* `compas_notebook.viewer.Viewer`.
+* Added `compas_notebook.conversions.color_to_threejs`.
+* Added `compas_notebook.conversions.box_to_threejs`.
+* Added `compas_notebook.conversions.cone_to_threejs`.
+* Added `compas_notebook.conversions.cylinder_to_threejs`.
+* Added `compas_notebook.conversions.polyhedron_to_threejs`.
+* Added `compas_notebook.conversions.sphere_to_threejs`.
+* Added `compas_notebook.conversions.torus_to_threejs`.
+* Added `compas_notebook.scene.BoxObject`.
+* Added `compas_notebook.scene.ConeObject`.
+* Added `compas_notebook.scene.CylinderObject`.
+* Added `compas_notebook.scene.MeshObject`.
+* Added `compas_notebook.scene.PolyhedronObject`.
+* Added `compas_notebook.scene.SphereObject`.
+* Added `compas_notebook.scene.TorusObject`.
+* Added `compas_notebook.viewer.Viewer`.
 
 ### Changed
 
