@@ -121,6 +121,7 @@ class Viewer:
             controls=[self.controls3],
             width=width,
             height=height,
+            antialias=True,
         )
 
         # ui
