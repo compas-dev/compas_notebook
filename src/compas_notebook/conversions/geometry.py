@@ -88,12 +88,7 @@ def polygon_to_threejs(polygon: Polygon) -> three.BufferGeometry:
     :class:`three.BufferGeometry`
 
     """
-    geometry = three.BufferGeometry(
-        attributes={
-            "position": three.BufferAttribute(polygon.points, normalized=False),
-        }
-    )
-    return geometry
+    raise NotImplementedError
 
 
 def box_to_threejs(box: Box) -> three.BoxGeometry:

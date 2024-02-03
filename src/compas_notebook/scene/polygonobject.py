@@ -1,6 +1,10 @@
+import pythreejs as three
 from compas.scene import GeometryObject
 from compas.colors import Color
-from compas_notebook.conversions import polygon_to_threejs
+from compas.geometry import earclip_polygon
+from compas.utilities import pairwise
+from compas_notebook.conversions import vertices_and_edges_to_threejs
+from compas_notebook.conversions import vertices_and_faces_to_threejs
 from .sceneobject import ThreeSceneObject
 
 
@@ -24,7 +28,16 @@ class PolygonObject(ThreeSceneObject, GeometryObject):
         color: Color = Color.coerce(color) or self.color
         contrastcolor: Color = color.darkened(50) if color.is_light else color.lightened(50)
 
-        geometry = polygon_to_threejs(self.geometry)
+        n = len(self.geometry.points)
+        vertices = self.geometry.points
+        triangles = earclip_polygon(self.geometry)
+        edges = list(pairwise(range(len(vertices)))) + [(n - 1, 0)]
 
-        self._guids = self.geometry_to_objects(geometry, color, contrastcolor)
+        geometry = vertices_and_faces_to_threejs(vertices, triangles)
+        mesh = three.Mesh(geometry, three.MeshBasicMaterial(color=color.hex, side="DoubleSide"))
+
+        geometry = vertices_and_edges_to_threejs(vertices, edges)
+        line = three.LineSegments(geometry, three.LineBasicMaterial(color=contrastcolor.hex))
+
+        self._guids = [mesh, line]
         return self.guids
