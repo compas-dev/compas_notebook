@@ -11,7 +11,8 @@ from compas.scene import register
 # from compas.geometry import Line
 # from compas.geometry import Plane
 # from compas.geometry import Point
-# from compas.geometry import Polygon
+from compas.geometry import Polygon
+
 # from compas.geometry import Polyline
 # from compas.geometry import Vector
 
@@ -49,6 +50,7 @@ from .cylinderobject import CylinderObject
 from .polyhedronobject import PolyhedronObject
 from .sphereobject import SphereObject
 from .torusobject import TorusObject
+from .polygonobject import PolygonObject
 
 from .meshobject import MeshObject
 
@@ -87,7 +89,7 @@ def register_scene_objects():
     # register(Line, LineObject, context="Notebook")
     # register(Plane, PlaneObject, context="Notebook")
     # register(Point, PointObject, context="Notebook")
-    # register(Polygon, PolygonObject, context="Notebook")
+    register(Polygon, PolygonObject, context="Notebook")
     # register(Polyline, PolylineObject, context="Notebook")
     # register(Vector, VectorObject, context="Notebook")
     register(Box, BoxObject, context="Notebook")
@@ -113,4 +115,5 @@ __all__ = [
     "PolyhedronObject",
     "SphereObject",
     "TorusObject",
+    "PolygonObject",
 ]
