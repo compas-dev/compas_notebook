@@ -19,5 +19,7 @@ exclude pytest.ini .bumpversion.cfg .editorconfig
 exclude tasks.py
 exclude CONTRIBUTING.md
 exclude conftest.py
+exclude compas_notebook-viewer.png
+exclude compas_notebook-vscode.png
 
 global-exclude *.py[cod] __pycache__ *.dylib *.nb[ic] .DS_Store
