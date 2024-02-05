@@ -114,6 +114,29 @@ def box_to_threejs(box: Box) -> three.BoxGeometry:
     return three.BoxGeometry(width=box.width, height=box.height, depth=box.depth)
 
 
+# def capsule_to_threejs(cone: Capsule) -> three.CapsuleGeometry:
+#     """Convert a COMPAS capsule to PyThreeJS.
+
+#     Parameters
+#     ----------
+#     cone : :class:`compas.geometry.Capsule`
+#         The capsule to convert.
+
+#     Returns
+#     -------
+#     :class:`three.CapsuleGeometry`
+
+#     Examples
+#     --------
+#     >>> from compas.geometry import Capsule
+#     >>> capsule = Capsule(radius=1, height=2)
+#     >>> capsule_to_threejs(cone)  # doctest: +ELLIPSIS
+#     CapsuleGeometry(...)
+
+#     """
+#     return three.CapsuleGeometry()
+
+
 def cone_to_threejs(cone: Cone) -> three.CylinderGeometry:
     """Convert a COMPAS cone to PyThreeJS.
 

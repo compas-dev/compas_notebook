@@ -10,8 +10,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 * Added `compas_notebook.scene.PolygonObject`.
+* Added `compas_notebook.viewer.Viewer.update`.
+* Added `compas_notebook.scene.CapsuleObject`.
+* Added `compas_notebook.scene.PolygonObject`.
 
 ### Changed
+
+* Fixed `compas_notebook.viewer.Viewer.zoom_in`.
+* Fixed `compas_notebook.viewer.Viewer.zoom_out`.
 
 ### Removed
 

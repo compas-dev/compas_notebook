@@ -2,6 +2,7 @@
 When working in a notebook, :class:`compas.scene.SceneObject` will automatically use the corresponding PyThreeJS scene object for each COMPAS object type.
 
 """
+
 from compas.plugins import plugin
 from compas.scene import register
 
@@ -17,6 +18,7 @@ from compas.geometry import Polygon
 # from compas.geometry import Vector
 
 from compas.geometry import Box
+from compas.geometry import Capsule
 from compas.geometry import Cone
 from compas.geometry import Cylinder
 from compas.geometry import Polyhedron
@@ -45,6 +47,7 @@ from .sceneobject import ThreeSceneObject
 # from .vectorobject import VectorObject
 
 from .boxobject import BoxObject
+from .capsuleobject import CapsuleObject
 from .coneobject import ConeObject
 from .cylinderobject import CylinderObject
 from .polyhedronobject import PolyhedronObject
@@ -93,6 +96,7 @@ def register_scene_objects():
     # register(Polyline, PolylineObject, context="Notebook")
     # register(Vector, VectorObject, context="Notebook")
     register(Box, BoxObject, context="Notebook")
+    register(Capsule, CapsuleObject, context="Notebook")
     register(Cone, ConeObject, context="Notebook")
     register(Cylinder, CylinderObject, context="Notebook")
     register(Polyhedron, PolyhedronObject, context="Notebook")
@@ -110,6 +114,7 @@ def register_scene_objects():
 __all__ = [
     "ThreeSceneObject",
     "BoxObject",
+    "CapsuleObject",
     "ConeObject",
     "CylinderObject",
     "PolyhedronObject",

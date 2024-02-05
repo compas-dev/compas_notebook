@@ -3,7 +3,7 @@ import pythreejs as three
 import ipywidgets as widgets
 from IPython.display import display as ipydisplay
 from compas.colors import Color
-from compas.geometry import Box
+from compas.geometry import Point
 from compas.scene import Scene
 
 
@@ -82,13 +82,13 @@ class Viewer:
         self.scene3 = three.Scene(background=background.hex)
 
         if self.show_grid:
-            grid = three.GridHelper(size=20, divisions=20, colorCenterLine=Color.grey().hex, colorGrid=Color.grey().lightened(50).hex)
-            grid.rotateX(3.14159 / 2)
-            self.scene3.add(grid)
+            self.grid3 = three.GridHelper(size=20, divisions=20, colorCenterLine=Color.grey().hex, colorGrid=Color.grey().lightened(50).hex)
+            self.grid3.rotateX(3.14159 / 2)
+            self.scene3.add(self.grid3)
 
         if self.show_axes:
-            self.axes = three.AxesHelper(size=0.5)
-            self.scene3.add(self.axes)
+            self.axes3 = three.AxesHelper(size=0.5)
+            self.scene3.add(self.axes3)
 
         # camera and controls
 
@@ -96,6 +96,7 @@ class Viewer:
             self.camera3 = three.OrthographicCamera(width / -2, width / 2, height / 2, height / -2, 0.1, 10000)
             self.camera3.position = camera.get("position", [0, 0, 1])
             self.camera3.zoom = 1
+
             self.controls3 = three.OrbitControls(controlling=self.camera3)
             self.controls3.enableRotate = False
 
@@ -105,13 +106,17 @@ class Viewer:
             self.camera3.up = camera.get("up", [0, 0, 1])
             self.camera3.aspect = aspect
             self.camera3.near = camera.get("near", 0.1)
-            self.camera3.far = camera.get("far", 10000)
+            self.camera3.far = camera.get("far", 1000)
             self.camera3.fov = camera.get("fov", 50)
             self.camera3.lookAt(camera.get("target", [0, 0, 0]))
+
             self.controls3 = three.OrbitControls(controlling=self.camera3)
 
         else:
             raise NotImplementedError
+
+        self.controls3.maxDistance = 1000
+        self.controls3.minDistance = 0.1
 
         # renderer
 
@@ -139,6 +144,20 @@ class Viewer:
             for o3 in o.guids:
                 self.scene3.add(o3)
         ipydisplay(self.ui)
+
+    def update(self):
+        """Update an existing viewer instance."""
+        for child in self.scene3.children:
+            self.scene3.remove(child)
+        self.scene3.children = []
+        if self.show_grid:
+            self.scene3.add(self.grid3)
+        if self.show_axes:
+            self.scene3.add(self.axes3)
+        self.scene.draw()
+        for o in self.scene.objects:
+            for o3 in o.guids:
+                self.scene3.add(o3)
 
     # =============================================================================
     # UI
@@ -199,20 +218,27 @@ class Viewer:
 
     def make_toolbar(self):
         """Initialize the toolbar."""
+        buttons = []
+
         load_scene_button = widgets.Button(icon="folder-open", tooltip="Load scene", layout=widgets.Layout(width="48px", height="32px"))
         load_scene_button.on_click(lambda x: self.load_scene())
+        buttons.append(load_scene_button)
 
         save_scene_button = widgets.Button(icon="save", tooltip="Load scene", layout=widgets.Layout(width="48px", height="32px"))
         save_scene_button.on_click(lambda x: self.save_scene())
+        buttons.append(save_scene_button)
 
-        zoom_extents_button = widgets.Button(icon="square", tooltip="Zoom extents", layout=widgets.Layout(width="48px", height="32px"))
-        zoom_extents_button.on_click(lambda x: self.zoom_extents())
+        # zoom_extents_button = widgets.Button(icon="square", tooltip="Zoom extents", layout=widgets.Layout(width="48px", height="32px"))
+        # zoom_extents_button.on_click(lambda x: self.zoom_extents())
+        # buttons.append(zoom_extents_button)
 
         zoom_in_button = widgets.Button(icon="search-plus", tooltip="Zoom in", layout=widgets.Layout(width="48px", height="32px"))
         zoom_in_button.on_click(lambda x: self.zoom_in())
+        buttons.append(zoom_in_button)
 
         zoom_out_button = widgets.Button(icon="search-minus", tooltip="Zoom out", layout=widgets.Layout(width="48px", height="32px"))
         zoom_out_button.on_click(lambda x: self.zoom_out())
+        buttons.append(zoom_out_button)
 
         toolbar = widgets.HBox()
         toolbar.layout.display = "flex"
@@ -222,7 +248,7 @@ class Viewer:
         toolbar.layout.height = "48px"
         toolbar.layout.padding = "0px 0px 0px 0px"
         toolbar.layout.margin = "0px 0px 0px 0px"
-        toolbar.children = [load_scene_button, save_scene_button, zoom_extents_button, zoom_in_button, zoom_out_button]
+        toolbar.children = buttons
 
         return toolbar
 
@@ -246,30 +272,15 @@ class Viewer:
     def zoom_extents(self):
         """Zoom to the extents of the scene."""
         self.set_statustext("Zoom extents...")
-
-        xmin = ymin = zmin = +1e12
-        xmax = ymax = zmax = -1e12
-        for obj in self.scene.objects:
-            if hasattr(obj, "mesh"):
-                box = Box.from_bounding_box(obj.mesh.aabb())
-                xmin = min(xmin, box.xmin)
-                ymin = min(ymin, box.ymin)
-                zmin = min(zmin, box.zmin)
-                xmax = max(xmax, box.xmax)
-                ymax = max(ymax, box.ymax)
-                zmax = max(zmax, box.zmax)
-            elif hasattr(obj, "geometry"):
-                pass
+        xmin, ymin, zmin, xmax, ymax, zmax = self.scene_bounds()
         dx = xmax - xmin
         dy = ymax - ymin
         dz = zmax - zmin
-        cx = (xmax + xmin) / 2
-        cy = (ymax + ymin) / 2
-        cz = (zmax + zmin) / 2
+        cx, cy, cz = (xmin + xmax) / 2, (ymin + ymax) / 2, (zmin + zmax) / 2
         d = max(dx, dy, dz)
 
         if self.viewport == "perspective":
-            self.camera3.position = [cx, cy - d, cz + 0.5 * d]
+            self.camera3.position = [cx, cy - 2 * d, cz + 0.5 * dz]
             self.camera3.lookAt([cx, cy, cz])
             self.camera3.zoom = 1
             self.controls3.target = [cx, cy, cz]
@@ -286,10 +297,41 @@ class Viewer:
         """Zoom in."""
         self.set_statustext("Zoom in...")
 
-        self.camera3.zoom *= 2
+        position = Point(*self.camera3.position)
+        target = Point(*self.controls3.target)
+        direction = position - target
+        self.camera3.position = list(target + direction * 0.5)
+        self.controls3.target = list(target)
 
     def zoom_out(self):
         """Zoom out."""
         self.set_statustext("Zoom out...")
 
-        self.camera3.zoom /= 2
+        position = Point(*self.camera3.position)
+        target = Point(*self.controls3.target)
+        direction = position - target
+        self.camera3.position = list(target + direction * 2.0)
+        self.controls3.target = list(target)
+
+    # move this to the scene
+    # add a BVH to the scene
+    def scene_bounds(self):
+        """Compute the axis-aligned bounding box of the scene."""
+        xmin = ymin = zmin = +1e12
+        xmax = ymax = zmax = -1e12
+        for obj in self.scene.objects:
+            if hasattr(obj, "mesh"):
+                box = obj.mesh.aabb()
+            elif hasattr(obj, "geometry"):
+                box = obj.geometry.aabb()
+            elif hasattr(obj, "brep"):
+                box = obj.brep.aabb()
+            else:
+                continue
+            xmin = min(xmin, box.xmin)
+            ymin = min(ymin, box.ymin)
+            zmin = min(zmin, box.zmin)
+            xmax = max(xmax, box.xmax)
+            ymax = max(ymax, box.ymax)
+            zmax = max(zmax, box.zmax)
+        return xmin, ymin, zmin, xmax, ymax, zmax
