@@ -1,6 +1,8 @@
+import pythreejs as three
 from compas.scene import GeometryObject
 from compas.colors import Color
-from compas_notebook.conversions import polyhedron_to_threejs
+from compas_notebook.conversions import vertices_and_edges_to_threejs
+from compas_notebook.conversions import vertices_and_faces_to_threejs
 from .sceneobject import ThreeSceneObject
 
 
@@ -21,10 +23,20 @@ class PolyhedronObject(ThreeSceneObject, GeometryObject):
             List of pythreejs objects created.
 
         """
-        color: Color = Color.coerce(color) or self.color
-        contrastcolor: Color = color.darkened(50) if color.is_light else color.lightened(50)
+        color = self.color if color is None else color
+        contrastcolor = self.contrastcolor(color)
 
-        geometry = polyhedron_to_threejs(self.geometry)
+        vertices = self.geometry.vertices
+        faces = self.geometry.faces
+        edges = self.geometry.edges
 
-        self._guids = self.geometry_to_objects(geometry, color, contrastcolor)
+        geometry = vertices_and_faces_to_threejs(vertices, faces)
+        mesh = three.Mesh(geometry, three.MeshBasicMaterial(color=color.hex, side="DoubleSide"))
+
+        geometry = vertices_and_edges_to_threejs(vertices, edges)
+        line = three.LineSegments(geometry, three.LineBasicMaterial(color=contrastcolor.hex))
+
+        guids = [mesh, line]
+
+        self._guids = guids
         return self.guids

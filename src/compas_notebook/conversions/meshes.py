@@ -67,13 +67,6 @@ def vertices_and_edges_to_threejs(vertices, edges) -> three.BufferGeometry:
         }
     )
 
-    # lines = []
-    # for u, v in edges:
-    #     lines.append([vertices[u], vertices[v]])
-    # lines = numpy.array(lines, dtype=numpy.float32)
-
-    # geometry = three.LineSegmentsGeometry(positions=lines)
-
     return geometry
 
 

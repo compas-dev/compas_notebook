@@ -9,10 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* Added `compas_notebook.scene.PointObject`.
+* Added `compas_notebook.scene.PointcloudObject`.
+* Added `compas_notebook.scene.PolylineObject`.
+* Added `compas_notebook.scene.LineObject`.
+* Added `compas_notebook.scene.GraphObject`.
+
 ### Changed
 
 ### Removed
-
 
 ## [0.1.4] 2024-02-05
 

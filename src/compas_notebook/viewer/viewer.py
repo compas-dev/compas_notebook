@@ -99,6 +99,8 @@ class Viewer:
 
             self.controls3 = three.OrbitControls(controlling=self.camera3)
             self.controls3.enableRotate = False
+            self.controls3.maxDistance = 1000
+            self.controls3.minDistance = 0.1
 
         elif self.viewport == "perspective":
             self.camera3 = three.PerspectiveCamera()
@@ -111,12 +113,11 @@ class Viewer:
             self.camera3.lookAt(camera.get("target", [0, 0, 0]))
 
             self.controls3 = three.OrbitControls(controlling=self.camera3)
+            self.controls3.maxDistance = 1000
+            self.controls3.minDistance = 0.1
 
         else:
             raise NotImplementedError
-
-        self.controls3.maxDistance = 1000
-        self.controls3.minDistance = 0.1
 
         # renderer
 
@@ -137,7 +138,7 @@ class Viewer:
     # System methods
     # =============================================================================
 
-    def show(self):
+    def show(self) -> None:
         """Display the viewer in the notebook."""
         self.scene.draw()
         for o in self.scene.objects:
@@ -145,7 +146,7 @@ class Viewer:
                 self.scene3.add(o3)
         ipydisplay(self.ui)
 
-    def update(self):
+    def update(self) -> None:
         """Update an existing viewer instance."""
         for child in self.scene3.children:
             self.scene3.remove(child)
@@ -163,8 +164,14 @@ class Viewer:
     # UI
     # =============================================================================
 
-    def init_ui(self):
-        """Initialize the user interface."""
+    def init_ui(self) -> None:
+        """Initialize the user interface.
+
+        Currently, this method does the following:
+
+        *
+
+        """
         self.ui = widgets.VBox()
         self.ui.layout.width = "auto"
         height = self.height
@@ -193,8 +200,14 @@ class Viewer:
         self.ui.layout.height = f"{height + 4}px"
         self.ui.children = children
 
-    def make_statusbar(self):
-        """Initialize the status bar."""
+    def make_statusbar(self) -> widgets.HBox:
+        """Initialize the status bar.
+
+        Returns
+        -------
+        ipywidgets.HBox
+
+        """
         statustext = widgets.Text(value="", placeholder="...", description="", disabled=True)
         statustext.layout.width = "100%"
         statustext.layout.height = "32px"
@@ -216,15 +229,29 @@ class Viewer:
 
         return statusbar
 
-    def make_toolbar(self):
-        """Initialize the toolbar."""
+    def make_toolbar(self) -> widgets.HBox:
+        """Initialize the toolbar.
+
+        Returns
+        -------
+        ipywidgets.HBox
+
+        """
         buttons = []
 
-        load_scene_button = widgets.Button(icon="folder-open", tooltip="Load scene", layout=widgets.Layout(width="48px", height="32px"))
+        load_scene_button = widgets.Button(
+            icon="folder-open",
+            tooltip="Load scene",
+            layout=widgets.Layout(width="48px", height="32px"),
+        )
         load_scene_button.on_click(lambda x: self.load_scene())
         buttons.append(load_scene_button)
 
-        save_scene_button = widgets.Button(icon="save", tooltip="Load scene", layout=widgets.Layout(width="48px", height="32px"))
+        save_scene_button = widgets.Button(
+            icon="save",
+            tooltip="Load scene",
+            layout=widgets.Layout(width="48px", height="32px"),
+        )
         save_scene_button.on_click(lambda x: self.save_scene())
         buttons.append(save_scene_button)
 
@@ -232,11 +259,19 @@ class Viewer:
         # zoom_extents_button.on_click(lambda x: self.zoom_extents())
         # buttons.append(zoom_extents_button)
 
-        zoom_in_button = widgets.Button(icon="search-plus", tooltip="Zoom in", layout=widgets.Layout(width="48px", height="32px"))
+        zoom_in_button = widgets.Button(
+            icon="search-plus",
+            tooltip="Zoom in",
+            layout=widgets.Layout(width="48px", height="32px"),
+        )
         zoom_in_button.on_click(lambda x: self.zoom_in())
         buttons.append(zoom_in_button)
 
-        zoom_out_button = widgets.Button(icon="search-minus", tooltip="Zoom out", layout=widgets.Layout(width="48px", height="32px"))
+        zoom_out_button = widgets.Button(
+            icon="search-minus",
+            tooltip="Zoom out",
+            layout=widgets.Layout(width="48px", height="32px"),
+        )
         zoom_out_button.on_click(lambda x: self.zoom_out())
         buttons.append(zoom_out_button)
 
@@ -256,21 +291,32 @@ class Viewer:
     # Actions
     # =============================================================================
 
-    def set_statustext(self, text):
+    def set_statustext(self, text: str) -> None:
         """Set the text of the status bar."""
         if self.status:
             self.status.value = text
 
-    def load_scene(self):
+    def load_scene(self) -> None:
         """Load a scene from file."""
         self.set_statustext("Loading scene...")
 
-    def save_scene(self):
+    def save_scene(self) -> None:
         """Save the scene to file."""
         self.set_statustext("Saving scene...")
 
-    def zoom_extents(self):
-        """Zoom to the extents of the scene."""
+    def zoom_extents(self) -> None:
+        """Zoom to the extents of the scene.
+
+        Raises
+        ------
+        NotImplementedError
+            If the value of ``self.viewport`` is anything other than ``{'perspective', 'top'}``
+
+        Warnings
+        --------
+        This function is experimental.
+
+        """
         self.set_statustext("Zoom extents...")
         xmin, ymin, zmin, xmax, ymax, zmax = self.scene_bounds()
         dx = xmax - xmin
@@ -281,8 +327,6 @@ class Viewer:
 
         if self.viewport == "perspective":
             self.camera3.position = [cx, cy - 2 * d, cz + 0.5 * dz]
-            self.camera3.lookAt([cx, cy, cz])
-            self.camera3.zoom = 1
             self.controls3.target = [cx, cy, cz]
 
         elif self.viewport == "top":
@@ -293,8 +337,20 @@ class Viewer:
         else:
             raise NotImplementedError
 
-    def zoom_in(self):
-        """Zoom in."""
+    def zoom_in(self) -> None:
+        """Zoom in.
+
+        Zooming in is done by halving the distance between the target and the camera position.
+        The camera position is a property of the camera itself.
+        The target is controlled by ``three.OrbitControls``.
+
+        So we basically compute the vector from the target location to the camera position,
+        and then move the camera to ``target + direction * 0.5``.
+
+        Note that you should not use the ``zoom`` attribute of the camera.
+        Changing the camera zoom is more like changing the magnification.
+
+        """
         self.set_statustext("Zoom in...")
 
         position = Point(*self.camera3.position)
@@ -303,8 +359,20 @@ class Viewer:
         self.camera3.position = list(target + direction * 0.5)
         self.controls3.target = list(target)
 
-    def zoom_out(self):
-        """Zoom out."""
+    def zoom_out(self) -> None:
+        """Zoom out.
+
+        Zooming out is done by doubling the distance between the target and the camera position.
+        The camera position is a property of the camera itself.
+        The target is controlled by ``three.OrbitControls``.
+
+        So we basically compute the vector from the target location to the camera position,
+        and then move the camera to ``target + direction * 2.0``.
+
+        Note that you should not use the ``zoom`` attribute of the camera.
+        Changing the camera zoom is more like changing the magnification.
+
+        """
         self.set_statustext("Zoom out...")
 
         position = Point(*self.camera3.position)
@@ -321,11 +389,11 @@ class Viewer:
         xmax = ymax = zmax = -1e12
         for obj in self.scene.objects:
             if hasattr(obj, "mesh"):
-                box = obj.mesh.aabb()
+                box = obj.mesh.aabb
             elif hasattr(obj, "geometry"):
-                box = obj.geometry.aabb()
+                box = obj.geometry.aabb
             elif hasattr(obj, "brep"):
-                box = obj.brep.aabb()
+                box = obj.brep.aabb
             else:
                 continue
             xmin = min(xmin, box.xmin)

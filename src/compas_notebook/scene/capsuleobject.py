@@ -25,7 +25,7 @@ class CapsuleObject(ThreeSceneObject, GeometryObject):
 
         """
         color: Color = Color.coerce(color) or self.color
-        contrastcolor: Color = color.darkened(50) if color.is_light else color.lightened(50)
+        contrastcolor = self.contrastcolor(color)
 
         mesh = Mesh.from_shape(self.geometry)
         vertices, faces = mesh.to_vertices_and_faces()

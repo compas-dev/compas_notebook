@@ -24,16 +24,13 @@ class MeshObject(ThreeSceneObject, MeshObject):
 
         """
         color = self.color if color is None else color
-        contrastcolor = color.darkened(50) if color.is_light else color.lightened(50)
+        contrastcolor = self.contrastcolor(color)
 
         vertices, faces = self.mesh.to_vertices_and_faces()
         edges = list(self.mesh.edges())
 
         geometry = vertices_and_faces_to_threejs(vertices, faces)
         mesh = three.Mesh(geometry, three.MeshBasicMaterial(color=color.hex, side="DoubleSide"))
-
-        # geometry = vertices_and_edges_to_threejs(vertices, edges)
-        # line = three.LineSegments2(geometry, three.LineMaterial(linewidth=2, color=contrastcolor.hex))
 
         geometry = vertices_and_edges_to_threejs(vertices, edges)
         line = three.LineSegments(geometry, three.LineBasicMaterial(color=contrastcolor.hex))

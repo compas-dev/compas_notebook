@@ -1,36 +1,13 @@
 import pythreejs as three
+import numpy
 from compas.geometry import Box
 from compas.geometry import Cone
 from compas.geometry import Cylinder
 from compas.geometry import Point
-from compas.geometry import Polygon
-from compas.geometry import Polyhedron
+from compas.geometry import Pointcloud
 from compas.geometry import Polyline
 from compas.geometry import Sphere
 from compas.geometry import Torus
-
-
-def point_to_threejs(point: Point) -> three.SphereGeometry:
-    """Convert a COMPAS point to PyThreeJS.
-
-    Parameters
-    ----------
-    point : :class:`compas.geometry.Point`
-        The point to convert.
-
-    Returns
-    -------
-    :class:`three.SphereGeometry`
-
-    Examples
-    --------
-    >>> from compas.geometry import Point
-    >>> point = Point(1, 2, 3)
-    >>> point_to_threejs(point)  # doctest: +ELLIPSIS
-    SphereGeometry(...)
-
-    """
-    return three.SphereGeometry(radius=0.05, widthSegments=32, heightSegments=32)
 
 
 def line_to_threejs(line: Point) -> three.BufferGeometry:
@@ -46,11 +23,55 @@ def line_to_threejs(line: Point) -> three.BufferGeometry:
     :class:`three.BufferGeometry`
 
     """
-    geometry = three.BufferGeometry(
-        attributes={
-            "position": three.BufferAttribute([line.start, line.end], normalized=False),
-        }
-    )
+    vertices = numpy.array([line.start, line.end], dtype=numpy.float32)
+    geometry = three.BufferGeometry(attributes={"position": three.BufferAttribute(vertices, normalized=False)})
+    return geometry
+
+
+def point_to_threejs(point: Point) -> three.SphereGeometry:
+    """Convert a COMPAS point to PyThreeJS.
+
+    Parameters
+    ----------
+    point : :class:`compas.geometry.Point`
+        The point to convert.
+
+    Returns
+    -------
+    :class:`three.BufferGeometry`
+
+    Examples
+    --------
+    >>> from compas.geometry import Point
+    >>> point = Point(1, 2, 3)
+    >>> point_to_threejs(point)  # doctest: +ELLIPSIS
+    BufferGeometry(...)
+
+    """
+    vertices = numpy.array([point], dtype=numpy.float32)
+    geometry = three.BufferGeometry(attributes={"position": three.BufferAttribute(vertices, normalized=False)})
+    return geometry
+
+
+def pointcloud_to_threejs(pointcloud: Pointcloud) -> three.SphereGeometry:
+    """Convert a COMPAS point to PyThreeJS.
+
+    Parameters
+    ----------
+    pointcloud : :class:`compas.geometry.Pointcloud`
+        The pointcloud to convert.
+
+    Returns
+    -------
+    :class:`three.BufferGeometry`
+
+    Examples
+    --------
+    >>>
+
+    """
+    vertices = numpy.array(pointcloud.points, dtype=numpy.float32)
+    geometry = three.BufferGeometry(attributes={"position": three.BufferAttribute(vertices, normalized=False)})
     return geometry
 
 
@@ -67,28 +88,14 @@ def polyline_to_threejs(polyline: Polyline) -> three.BufferGeometry:
     :class:`three.BufferGeometry`
 
     """
-    geometry = three.BufferGeometry(
-        attributes={
-            "position": three.BufferAttribute(polyline.points, normalized=False),
-        }
-    )
+    vertices = numpy.array(polyline.points, dtype=numpy.float32)
+    geometry = three.BufferGeometry(attributes={"position": three.BufferAttribute(vertices, normalized=False)})
     return geometry
 
 
-def polygon_to_threejs(polygon: Polygon) -> three.BufferGeometry:
-    """Convert a COMPAS polygon to PyThreeJS.
-
-    Parameters
-    ----------
-    polygon : :class:`compas.geometry.Polygon`
-        The polygon to convert.
-
-    Returns
-    -------
-    :class:`three.BufferGeometry`
-
-    """
-    raise NotImplementedError
+# =============================================================================
+# Shapes
+# =============================================================================
 
 
 def box_to_threejs(box: Box) -> three.BoxGeometry:
@@ -112,29 +119,6 @@ def box_to_threejs(box: Box) -> three.BoxGeometry:
 
     """
     return three.BoxGeometry(width=box.width, height=box.height, depth=box.depth)
-
-
-# def capsule_to_threejs(cone: Capsule) -> three.CapsuleGeometry:
-#     """Convert a COMPAS capsule to PyThreeJS.
-
-#     Parameters
-#     ----------
-#     cone : :class:`compas.geometry.Capsule`
-#         The capsule to convert.
-
-#     Returns
-#     -------
-#     :class:`three.CapsuleGeometry`
-
-#     Examples
-#     --------
-#     >>> from compas.geometry import Capsule
-#     >>> capsule = Capsule(radius=1, height=2)
-#     >>> capsule_to_threejs(cone)  # doctest: +ELLIPSIS
-#     CapsuleGeometry(...)
-
-#     """
-#     return three.CapsuleGeometry()
 
 
 def cone_to_threejs(cone: Cone) -> three.CylinderGeometry:
@@ -228,7 +212,3 @@ def torus_to_threejs(torus: Torus) -> three.TorusGeometry:
 
     """
     return three.TorusGeometry(radius=torus.radius_axis, tube=torus.radius_pipe, radialSegments=64, tubularSegments=32)
-
-
-def polyhedron_to_threejs(polyhedron: Polyhedron) -> three.BufferGeometry:
-    raise NotImplementedError

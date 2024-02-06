@@ -26,7 +26,7 @@ class PolygonObject(ThreeSceneObject, GeometryObject):
 
         """
         color: Color = Color.coerce(color) or self.color
-        contrastcolor: Color = color.darkened(50) if color.is_light else color.lightened(50)
+        contrastcolor = self.contrastcolor(color)
 
         n = len(self.geometry.points)
         vertices = self.geometry.points

@@ -22,7 +22,6 @@ class BoxObject(ThreeSceneObject, GeometryObject):
 
         """
         color = Color.coerce(color) or self.color
-        contrastcolor: Color = color.darkened(50) if color.is_light else color.lightened(50)
 
         geometry = box_to_threejs(self.geometry)
         transformation = self.y_to_z(self.geometry.transformation)
@@ -30,7 +29,6 @@ class BoxObject(ThreeSceneObject, GeometryObject):
         self._guids = self.geometry_to_objects(
             geometry,
             color,
-            contrastcolor,
             transformation=transformation,
         )
 

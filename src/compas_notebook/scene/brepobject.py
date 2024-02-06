@@ -29,7 +29,7 @@ class BrepObject(ThreeSceneObject, GeometryObject):
 
         """
         color = self.color if color is None else color
-        contrastcolor = color.darkened(75) if color.is_light else color.lightened(75)
+        contrastcolor = self.contrastcolor(color)
 
         mesh, polylines = self.brep.to_viewmesh()
         vertices, faces = mesh.to_vertices_and_faces()

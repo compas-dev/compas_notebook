@@ -22,7 +22,6 @@ class ConeObject(ThreeSceneObject, GeometryObject):
 
         """
         color: Color = Color.coerce(color) or self.color
-        contrastcolor: Color = color.darkened(50) if color.is_light else color.lightened(50)
 
         geometry = three.CylinderGeometry(
             radiusTop=0,
@@ -35,7 +34,6 @@ class ConeObject(ThreeSceneObject, GeometryObject):
         self._guids = self.geometry_to_objects(
             geometry,
             color,
-            contrastcolor,
             transformation=transformation,
         )
         return self.guids
