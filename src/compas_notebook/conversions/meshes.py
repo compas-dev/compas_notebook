@@ -1,5 +1,7 @@
 import pythreejs as three
 import numpy
+from compas.geometry import Polygon
+from compas.geometry import earclip_polygon
 
 
 def vertices_and_faces_to_threejs(vertices, faces) -> three.BufferGeometry:
@@ -26,7 +28,10 @@ def vertices_and_faces_to_threejs(vertices, faces) -> three.BufferGeometry:
             triangles.append([face[0], face[1], face[2]])
             triangles.append([face[0], face[2], face[3]])
         else:
-            raise NotImplementedError
+            polygon = Polygon([vertices[v] for v in face])
+            ears = earclip_polygon(polygon)
+            for ear in ears:
+                triangles.append([face[index] for index in ear])
 
     vertices = numpy.array(vertices, dtype=numpy.float32)
     triangles = numpy.array(triangles, dtype=numpy.uint32).ravel()
