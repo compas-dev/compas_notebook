@@ -6,14 +6,6 @@ When working in a notebook, :class:`compas.scene.SceneObject` will automatically
 from compas.plugins import plugin
 from compas.scene import register
 
-# from compas.geometry import Circle
-# from compas.geometry import Curve
-# from compas.geometry import Ellipse
-# from compas.geometry import Frame
-# from compas.geometry import Plane
-# from compas.geometry import Surface
-# from compas.geometry import Vector
-
 from compas.geometry import Box
 from compas.geometry import Brep
 from compas.geometry import Capsule
@@ -28,39 +20,27 @@ from compas.geometry import Polyline
 from compas.geometry import Sphere
 from compas.geometry import Torus
 
-# from compas.datastructures import VolMesh
-
 from compas.datastructures import Graph
 from compas.datastructures import Mesh
 
 from .sceneobject import ThreeSceneObject
 
-# from .circleobject import CircleObject
-# from .ellipseobject import EllipseObject
-# from .frameobject import FrameObject
-# from .planeobject import PlaneObject
-# from .vectorobject import VectorObject
-# from .curveobject import CurveObject
-# from .surfaceobject import SurfaceObject
+from .boxobject import ThreeBoxObject
+from .brepobject import ThreeBrepObject
+from .capsuleobject import ThreeCapsuleObject
+from .coneobject import ThreeConeObject
+from .cylinderobject import ThreeCylinderObject
+from .lineobject import ThreeLineObject
+from .pointobject import ThreePointObject
+from .pointcloudobject import ThreePointcloudObject
+from .polygonobject import ThreePolygonObject
+from .polyhedronobject import ThreePolyhedronObject
+from .polylineobject import ThreePolylineObject
+from .sphereobject import ThreeSphereObject
+from .torusobject import ThreeTorusObject
 
-from .boxobject import BoxObject
-from .brepobject import BrepObject
-from .capsuleobject import CapsuleObject
-from .coneobject import ConeObject
-from .cylinderobject import CylinderObject
-from .lineobject import LineObject
-from .pointobject import PointObject
-from .pointcloudobject import PointcloudObject
-from .polygonobject import PolygonObject
-from .polyhedronobject import PolyhedronObject
-from .polylineobject import PolylineObject
-from .sphereobject import SphereObject
-from .torusobject import TorusObject
-
-# from .volmeshobject import VolMeshObject
-
-from .graphobject import GraphObject
-from .meshobject import MeshObject
+from .graphobject import ThreeGraphObject
+from .meshobject import ThreeMeshObject
 
 
 @plugin(category="drawing-utils", pluggable_name="clear", requires=["pythreejs"])
@@ -84,46 +64,37 @@ def after_draw(sceneobjects):
 
 @plugin(category="factories", requires=["pythreejs"])
 def register_scene_objects():
-    # register(Circle, CircleObject, context="Notebook")
-    # register(Ellipse, EllipseObject, context="Notebook")
-    # register(Frame, FrameObject, context="Notebook")
-    # register(Plane, PlaneObject, context="Notebook")
-    # register(Vector, VectorObject, context="Notebook")
-    # register(VolMesh, VolMeshObject, context="Notebook")
-    # register(Curve, CurveObject, context="Notebook")
-    # register(Surface, SurfaceObject, context="Notebook")
-
-    register(Box, BoxObject, context="Notebook")
-    register(Brep, BrepObject, context="Notebook")
-    register(Capsule, CapsuleObject, context="Notebook")
-    register(Cone, ConeObject, context="Notebook")
-    register(Cylinder, CylinderObject, context="Notebook")
-    register(Graph, GraphObject, context="Notebook")
-    register(Line, LineObject, context="Notebook")
-    register(Point, PointObject, context="Notebook")
-    register(Pointcloud, PointcloudObject, context="Notebook")
-    register(Polygon, PolygonObject, context="Notebook")
-    register(Polyhedron, PolyhedronObject, context="Notebook")
-    register(Polyline, PolylineObject, context="Notebook")
-    register(Sphere, SphereObject, context="Notebook")
-    register(Torus, TorusObject, context="Notebook")
-    register(Mesh, MeshObject, context="Notebook")
+    register(Box, ThreeBoxObject, context="Notebook")
+    register(Brep, ThreeBrepObject, context="Notebook")
+    register(Capsule, ThreeCapsuleObject, context="Notebook")
+    register(Cone, ThreeConeObject, context="Notebook")
+    register(Cylinder, ThreeCylinderObject, context="Notebook")
+    register(Graph, ThreeGraphObject, context="Notebook")
+    register(Line, ThreeLineObject, context="Notebook")
+    register(Point, ThreePointObject, context="Notebook")
+    register(Pointcloud, ThreePointcloudObject, context="Notebook")
+    register(Polygon, ThreePolygonObject, context="Notebook")
+    register(Polyhedron, ThreePolyhedronObject, context="Notebook")
+    register(Polyline, ThreePolylineObject, context="Notebook")
+    register(Sphere, ThreeSphereObject, context="Notebook")
+    register(Torus, ThreeTorusObject, context="Notebook")
+    register(Mesh, ThreeMeshObject, context="Notebook")
 
     print("PyThreeJS SceneObjects registered.")
 
 
 __all__ = [
-    "BoxObject",
-    "CapsuleObject",
-    "ConeObject",
-    "CylinderObject",
-    "GraphObject",
-    "PointObject",
-    "PointcloudObject",
-    "PolygonObject",
-    "PolyhedronObject",
-    "PolylineObject",
-    "SphereObject",
-    "TorusObject",
+    "ThreeBoxObject",
+    "ThreeCapsuleObject",
+    "ThreeConeObject",
+    "ThreeCylinderObject",
+    "ThreeGraphObject",
+    "ThreePointObject",
+    "ThreePointcloudObject",
+    "ThreePolygonObject",
+    "ThreePolyhedronObject",
+    "ThreePolylineObject",
     "ThreeSceneObject",
+    "ThreeSphereObject",
+    "ThreeTorusObject",
 ]
