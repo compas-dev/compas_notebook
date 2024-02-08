@@ -54,7 +54,7 @@ class ThreeSceneObject(SceneObject):
 
         """
         if not contrastcolor:
-            contrastcolor = self.contrastcolor(color)
+            contrastcolor = self.contrastcolor
 
         edges = three.EdgesGeometry(geometry)
         mesh = three.Mesh(geometry, three.MeshBasicMaterial(color=color.hex, side="DoubleSide"))
@@ -68,17 +68,3 @@ class ThreeSceneObject(SceneObject):
             line.matrixAutoUpdate = False
 
         return mesh, line
-
-    def contrastcolor(self, color: Color) -> Color:
-        """Compute the constrast color for the given color.
-
-        Parameters
-        ----------
-        color : :class:`compas.colors.Color`
-
-        Returns
-        -------
-        :class:`compas.colors.Color`
-
-        """
-        return color.darkened(50) if color.is_light else color.lightened(50)

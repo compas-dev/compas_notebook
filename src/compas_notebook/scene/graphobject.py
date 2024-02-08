@@ -5,16 +5,11 @@ from compas_notebook.conversions import nodes_to_threejs
 from compas_notebook.scene import ThreeSceneObject
 
 
-class GraphObject(ThreeSceneObject, GraphObject):
+class ThreeGraphObject(ThreeSceneObject, GraphObject):
     """Scene object for drawing graph."""
 
-    def draw(self, color=None):
+    def draw(self):
         """Draw the graph associated with the scene object.
-
-        Parameters
-        ----------
-        color : rgb1 | rgb255 | :class:`compas.colors.Color`, optional
-            The RGB color of the graph.
 
         Returns
         -------
@@ -22,20 +17,25 @@ class GraphObject(ThreeSceneObject, GraphObject):
             List of pythreejs objects created.
 
         """
-        color = self.color if color is None else color
-        contrastcolor = self.contrastcolor(color)
+        guids = []
 
         nodes, edges = self.graph.to_nodes_and_edges()
 
-        geometry = nodes_and_edges_to_threejs(nodes, edges)
-        line = three.LineSegments(geometry, three.LineBasicMaterial(color=contrastcolor.hex))
-
-        guids = [line]
-
         if self.show_nodes:
+            if self.show_nodes is not True:
+                nodes = self.show_nodes
+
             geometry = nodes_to_threejs(nodes)
-            points = three.Points(geometry, three.PointsMaterial(size=0.1, color=contrastcolor.hex))
+            points = three.Points(geometry, three.PointsMaterial(size=self.nodesize, color=self.contrastcolor.hex))
             guids.append(points)
+
+        if self.show_edges:
+            if self.show_edges is not True:
+                edges = self.show_edges
+
+            geometry = nodes_and_edges_to_threejs(nodes, edges)
+            line = three.LineSegments(geometry, three.LineBasicMaterial(color=self.contrastcolor.hex))
+            guids.append(line)
 
         self._guids = guids
         return self.guids

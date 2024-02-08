@@ -1,19 +1,13 @@
 import pythreejs as three
 from compas.scene import GeometryObject
-from compas.colors import Color
 from .sceneobject import ThreeSceneObject
 
 
-class CylinderObject(ThreeSceneObject, GeometryObject):
+class ThreeCylinderObject(ThreeSceneObject, GeometryObject):
     """Scene object for drawing cylinder."""
 
-    def draw(self, color: Color = None):
+    def draw(self):
         """Draw the cylinder associated with the scene object.
-
-        Parameters
-        ----------
-        color : rgb1 | rgb255 | :class:`compas.colors.Color`, optional
-            The RGB color of the cylinder.
 
         Returns
         -------
@@ -21,8 +15,6 @@ class CylinderObject(ThreeSceneObject, GeometryObject):
             List of pythreejs objects created.
 
         """
-        color: Color = Color.coerce(color) or self.color
-
         geometry = three.CylinderGeometry(
             radiusTop=self.geometry.radius,
             radiusBottom=self.geometry.radius,
@@ -34,7 +26,7 @@ class CylinderObject(ThreeSceneObject, GeometryObject):
 
         self._guids = self.geometry_to_objects(
             geometry,
-            color,
+            self.color,
             transformation=transformation,
         )
         return self.guids
