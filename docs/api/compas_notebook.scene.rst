@@ -11,15 +11,15 @@ Classes
     :toctree: generated/
     :nosignatures:
 
-    compas_notebook.scene.BoxObject
-    compas_notebook.scene.BrepObject
-    compas_notebook.scene.ConeObject
-    compas_notebook.scene.CylinderObject
-    compas_notebook.scene.MeshObject
-    compas_notebook.scene.PolyhedronObject
-    compas_notebook.scene.SphereObject
-    compas_notebook.scene.ThreeSceneObject
-    compas_notebook.scene.TorusObject
+    ThreeBoxObject
+    ThreeBrepObject
+    ThreeConeObject
+    ThreeCylinderObject
+    ThreeMeshObject
+    ThreePolyhedronObject
+    ThreeSceneObject
+    ThreeSphereObject
+    ThreeTorusObject
 
 
 Plugins
