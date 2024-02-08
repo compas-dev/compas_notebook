@@ -15,7 +15,6 @@ Functions
     color_to_threejs
     cone_to_threejs
     cylinder_to_threejs
-    polyhedron_to_threejs
     polyline_to_threejs
     sphere_to_threejs
     torus_to_threejs
