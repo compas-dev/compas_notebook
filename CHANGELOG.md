@@ -9,7 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* Added support for `compas_notebook.scene.ThreeMeshObject.vertexcolor`.
+* Added support for `compas_notebook.scene.ThreeMeshObject.edgecolor`.
+* Added support for `compas_notebook.scene.ThreeMeshObject.facecolor`.
+* Added support for Ngon faces.
+
 ### Changed
+
+* Changed name of all scene objects to use prefix `Three`.
 
 ### Removed
 
