@@ -3,7 +3,7 @@ Examples
 ********************************************************************************
 
 .. image:: https://mybinder.org/badge_logo.svg
-    :target: https://mybinder.org/v2/gh/compas-dev/compas_notebook/main
+    :target: https://mybinder.org/v2/gh/compas-dev/compas_notebook/main?urlpath=lab/tree/notebooks
 
 
 There are example notebooks in the ``notebooks`` directory of the repo.
@@ -24,4 +24,4 @@ To start the Jupyter server, run the following command in a terminal
     $ jupyter notebook
 
 
-Or use `this binder <https://mybinder.org/v2/gh/compas-dev/compas_notebook/main>`_ to try out the functionality wihtout installing anything.
+Or use `this binder <https://mybinder.org/v2/gh/compas-dev/compas_notebook/main?urlpath=lab/tree/notebooks>`_ to try out the functionality wihtout installing anything.
