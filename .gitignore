@@ -118,3 +118,6 @@ temp/**
 docs/api/generated/
 
 conda.recipe/
+
+.pytest_cache
+.ruff_cache
