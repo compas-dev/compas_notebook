@@ -1,8 +1,10 @@
 import pythreejs as three
-from compas.scene import GeometryObject
 from compas.datastructures import Mesh
+from compas.scene import GeometryObject
+
 from compas_notebook.conversions import vertices_and_edges_to_threejs
 from compas_notebook.conversions import vertices_and_faces_to_threejs
+
 from .sceneobject import ThreeSceneObject
 
 

@@ -22,3 +22,15 @@ The latest version can be installed from local source.
     git clone https://github.com/compas-dev/compas_notebook.git
     cd compas_notebook
     pip install -e .
+
+
+Development
+===========
+
+To install `compas_notebook` for development, install from local source with the "dev" requirements.
+
+.. code-block:: bash
+
+    git clone https://github.com/compas-dev/compas_notebook.git
+    cd compas_notebook
+    pip install -e ".[dev]"

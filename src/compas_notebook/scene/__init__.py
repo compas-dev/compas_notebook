@@ -1,5 +1,6 @@
 """This package provides scene object plugins for visualising COMPAS objects in Jupyter Notebooks using three.
-When working in a notebook, :class:`compas.scene.SceneObject` will automatically use the corresponding PyThreeJS scene object for each COMPAS object type.
+When working in a notebook, :class:`compas.scene.SceneObject`
+will automatically use the corresponding PyThreeJS scene object for each COMPAS object type.
 
 """
 

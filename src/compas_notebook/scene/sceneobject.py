@@ -1,8 +1,10 @@
 from typing import Tuple
-import pythreejs as three
+
 import numpy
+import pythreejs as three
 from compas.colors import Color
-from compas.geometry import Transformation, Rotation
+from compas.geometry import Rotation
+from compas.geometry import Transformation
 from compas.scene import SceneObject
 
 Rx = Rotation.from_axis_and_angle([1, 0, 0], 3.14159 / 2)

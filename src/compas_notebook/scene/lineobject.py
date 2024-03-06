@@ -1,6 +1,8 @@
 import pythreejs as three
 from compas.scene import GeometryObject
+
 from compas_notebook.conversions import line_to_threejs
+
 from .sceneobject import ThreeSceneObject
 
 

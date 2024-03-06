@@ -1,5 +1,6 @@
 import pythreejs as three
 from compas.scene import GraphObject
+
 from compas_notebook.conversions import nodes_and_edges_to_threejs
 from compas_notebook.conversions import nodes_to_threejs
 from compas_notebook.scene import ThreeSceneObject

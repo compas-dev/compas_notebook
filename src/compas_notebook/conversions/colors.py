@@ -19,8 +19,8 @@ def color_to_threejs(color: Color) -> MeshBasicMaterial:
     --------
     >>> from compas.colors import Color
     >>> color = Color.from_rgb255(255, 0, 0)
-    >>> color_to_threejs(color)
-    MeshBasicMaterial(alphaMap=None, aoMap=None, color='#ff0000', envMap=None, lightMap=None, map=None, specularMap=None)
+    >>> color_to_threejs(color)  # doctest: +ELLIPSIS
+    MeshBasicMaterial(...)
 
     """
     return MeshBasicMaterial(color=color.hex)

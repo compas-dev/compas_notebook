@@ -13,7 +13,7 @@ To run the notebooks you need to clone the repo and install the package requirem
 
     $ git clone https://github.com/compas-dev/compas_notebook.git
     $ cd compas_notebook
-    $ pip install -r requirements-dev.txt
+    $ pip install -e ".[dev]"
 
 
 Notebooks can be used directly in VS Code, or in the browser using Jupyter.

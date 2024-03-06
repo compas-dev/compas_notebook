@@ -1,5 +1,6 @@
 import pythreejs as three
 from compas.scene import GeometryObject
+
 from .sceneobject import ThreeSceneObject
 
 

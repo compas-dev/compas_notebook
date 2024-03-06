@@ -3,6 +3,7 @@ import pythreejs as three
 from compas.geometry import Polygon
 from compas.geometry import earclip_polygon
 from compas.scene import MeshObject
+
 from compas_notebook.scene import ThreeSceneObject
 
 

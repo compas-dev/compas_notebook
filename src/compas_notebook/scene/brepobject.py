@@ -1,9 +1,11 @@
 from typing import Any
+
 import pythreejs as three
 from compas.geometry import Brep
 from compas.scene import GeometryObject
-from compas_notebook.conversions import vertices_and_faces_to_threejs
+
 from compas_notebook.conversions import polyline_to_threejs
+from compas_notebook.conversions import vertices_and_faces_to_threejs
 from compas_notebook.scene import ThreeSceneObject
 
 

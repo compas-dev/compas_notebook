@@ -7,8 +7,7 @@ import sphinx_compas2_theme
 # -- General configuration ------------------------------------------------
 
 project = "COMPAS Notebook"
-copyright = "COMPAS Association"
-author = "Tom Van Mele"
+copyright = "ETH Zurich - Block Research Group"
 package = "compas_notebook"
 organization = "compas-dev"
 

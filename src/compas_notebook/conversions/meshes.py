@@ -1,5 +1,5 @@
-import pythreejs as three
 import numpy
+import pythreejs as three
 from compas.geometry import Polygon
 from compas.geometry import earclip_polygon
 

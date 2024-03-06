@@ -1,5 +1,5 @@
-import pythreejs as three
 import numpy
+import pythreejs as three
 from compas.geometry import Box
 from compas.geometry import Cone
 from compas.geometry import Cylinder
@@ -141,7 +141,12 @@ def cone_to_threejs(cone: Cone) -> three.CylinderGeometry:
     CylinderGeometry(...)
 
     """
-    return three.CylinderGeometry(radiusTop=0, radiusBottom=cone.radius, height=cone.height, radialSegments=32)
+    return three.CylinderGeometry(
+        radiusTop=0,
+        radiusBottom=cone.radius,
+        height=cone.height,
+        radialSegments=32,
+    )
 
 
 def cylinder_to_threejs(cylinder: Cylinder) -> three.CylinderGeometry:
@@ -164,7 +169,12 @@ def cylinder_to_threejs(cylinder: Cylinder) -> three.CylinderGeometry:
     CylinderGeometry(...)
 
     """
-    return three.CylinderGeometry(radiusTop=cylinder.radius, radiusBottom=cylinder.radius, height=cylinder.height, radialSegments=32)
+    return three.CylinderGeometry(
+        radiusTop=cylinder.radius,
+        radiusBottom=cylinder.radius,
+        height=cylinder.height,
+        radialSegments=32,
+    )
 
 
 def sphere_to_threejs(sphere: Sphere) -> three.SphereGeometry:
@@ -211,4 +221,9 @@ def torus_to_threejs(torus: Torus) -> three.TorusGeometry:
     TorusGeometry(...)
 
     """
-    return three.TorusGeometry(radius=torus.radius_axis, tube=torus.radius_pipe, radialSegments=64, tubularSegments=32)
+    return three.TorusGeometry(
+        radius=torus.radius_axis,
+        tube=torus.radius_pipe,
+        radialSegments=64,
+        tubularSegments=32,
+    )

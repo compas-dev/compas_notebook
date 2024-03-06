@@ -1,5 +1,5 @@
-import pythreejs as three
 import numpy
+import pythreejs as three
 
 
 def nodes_and_edges_to_threejs(nodes, edges) -> three.BufferGeometry:

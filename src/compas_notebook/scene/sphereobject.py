@@ -1,5 +1,7 @@
 from compas.scene import GeometryObject
+
 from compas_notebook.conversions import sphere_to_threejs
+
 from .sceneobject import ThreeSceneObject
 
 
