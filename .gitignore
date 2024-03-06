@@ -108,7 +108,7 @@ ENV/
 *.rhl
 *.rui_bak
 
-temp
+temp/
 
 .DS_Store
 
@@ -118,5 +118,5 @@ docs/api/generated/
 
 conda.recipe/
 
-.pytest_cache
-.ruff_cache
+.pytest_cache/
+.ruff_cache/
