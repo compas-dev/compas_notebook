@@ -9,7 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* Added `compas_notebook.config.Config`.
+* Added `compas_notebook.controller.Controller`.
+* Added support for sidebar with configurable widgets and actions.
+* Added base configuration file: `compas_notebook/config.json`.
+
 ### Changed
+
+* Changed repo config to `pyproject.toml`.
 
 ### Removed
 
