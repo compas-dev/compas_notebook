@@ -108,8 +108,7 @@ ENV/
 *.rhl
 *.rui_bak
 
-temp/**
-!temp/PLACEHOLDER
+temp
 
 .DS_Store
 
