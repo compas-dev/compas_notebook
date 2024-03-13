@@ -19,7 +19,7 @@ class CameraConfig:
 @dataclass
 class ViewConfig:
     viewport: Literal["top", "perspective"] = "perspective"
-    background: Color = Color.from_hex("#eeeeee")
+    background: Color = field(default_factory=lambda: Color.from_hex("#eeeeee"))
     width: float = 1100
     height: float = 580
     show_grid: bool = True
