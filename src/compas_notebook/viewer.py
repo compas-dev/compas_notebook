@@ -1,5 +1,3 @@
-import pathlib
-
 import ipywidgets as widgets
 import pythreejs as three
 from compas.colors import Color
@@ -41,12 +39,10 @@ class Viewer:
     def __init__(
         self,
         config: Config = None,
-        configpath: str = None,
         scene: Scene = None,
         controller: Controller = None,
     ):
-        configpath = configpath or pathlib.Path(__file__).parent / "config.json"
-        self.config = config or Config.from_json(configpath)
+        self.config = config or Config()
         self.scene = scene or Scene(context="Notebook")
         self.controller = controller or Controller(viewer=self)
 
@@ -289,21 +285,21 @@ class Viewer:
         """
         buttons = []
 
-        load_scene_button = widgets.Button(
-            icon="folder-open",
-            tooltip="Load scene",
-            layout=widgets.Layout(width="48px", height="32px"),
-        )
-        load_scene_button.on_click(lambda x: self.controller.load_scene())
-        buttons.append(load_scene_button)
+        # load_scene_button = widgets.Button(
+        #     icon="folder-open",
+        #     tooltip="Load scene",
+        #     layout=widgets.Layout(width="48px", height="32px"),
+        # )
+        # load_scene_button.on_click(lambda x: self.controller.load_scene())
+        # buttons.append(load_scene_button)
 
-        save_scene_button = widgets.Button(
-            icon="save",
-            tooltip="Load scene",
-            layout=widgets.Layout(width="48px", height="32px"),
-        )
-        save_scene_button.on_click(lambda x: self.controller.save_scene())
-        buttons.append(save_scene_button)
+        # save_scene_button = widgets.Button(
+        #     icon="save",
+        #     tooltip="Load scene",
+        #     layout=widgets.Layout(width="48px", height="32px"),
+        # )
+        # save_scene_button.on_click(lambda x: self.controller.save_scene())
+        # buttons.append(save_scene_button)
 
         zoom_in_button = widgets.Button(
             icon="search-plus",

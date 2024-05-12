@@ -11,7 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+* Fixed broken import `from compas.utilities import pairwise`.
+* Changed viewer initalisation to use default config object and not config from json.
+* Changed `compas_notebook.config.SidebarConfig.show` to `False`.
+
 ### Removed
+
+* Removed `load_scene` and `save_scene` from default toolbar.
 
 
 ## [0.6.0] 2024-04-17

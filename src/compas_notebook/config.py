@@ -34,7 +34,7 @@ class ViewConfig:
 
 @dataclass
 class SidebarConfig:
-    show: bool = True
+    show: bool = False
     items: list[dict[str, str]] = None
 
 
