@@ -1,7 +1,7 @@
 import pythreejs as three
 from compas.geometry import earclip_polygon
+from compas.itertools import pairwise
 from compas.scene import GeometryObject
-from compas.utilities import pairwise
 
 from compas_notebook.conversions import vertices_and_edges_to_threejs
 from compas_notebook.conversions import vertices_and_faces_to_threejs
