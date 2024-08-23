@@ -12,9 +12,7 @@ from compas_notebook.scene import ThreeSceneObject
 class ThreeBrepObject(ThreeSceneObject, GeometryObject):
     """Scene object for drawing a Brep."""
 
-    def __init__(self, item: Brep, *args: Any, **kwargs: Any):
-        super().__init__(geometry=item, *args, **kwargs)
-        self.brep = item
+    geometry: Brep
 
     def draw(self):
         """Draw the Brep associated with the scene object.
@@ -25,7 +23,7 @@ class ThreeBrepObject(ThreeSceneObject, GeometryObject):
             List of pythreejs objects created.
 
         """
-        mesh, polylines = self.brep.to_viewmesh()
+        mesh, polylines = self.geometry.to_viewmesh()
         vertices, faces = mesh.to_vertices_and_faces()
 
         geometry = vertices_and_faces_to_threejs(vertices, faces)

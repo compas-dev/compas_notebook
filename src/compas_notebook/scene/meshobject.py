@@ -43,7 +43,7 @@ class ThreeMeshObject(ThreeSceneObject, MeshObject):
         return self.guids
 
     def draw_vertices(self, vertices, color):
-        positions = [self.vertex_xyz[vertex] for vertex in vertices]
+        positions = [self.mesh.vertex_coordinates(vertex) for vertex in vertices]
         positions = numpy.array(positions, dtype=numpy.float32)
         colors = [color[i] for i in range(len(vertices))]
         colors = numpy.array(colors, dtype=numpy.float32)
@@ -65,8 +65,8 @@ class ThreeMeshObject(ThreeSceneObject, MeshObject):
         colors = []
 
         for u, v in edges:
-            positions.append(self.vertex_xyz[u])
-            positions.append(self.vertex_xyz[v])
+            positions.append(self.mesh.vertex_coordinates(u))
+            positions.append(self.mesh.vertex_coordinates(v))
             colors.append(color[u, v])
             colors.append(color[u, v])
 
@@ -91,32 +91,32 @@ class ThreeMeshObject(ThreeSceneObject, MeshObject):
             c = color[face]
 
             if len(vertices) == 3:
-                positions.append(self.vertex_xyz[vertices[0]])
-                positions.append(self.vertex_xyz[vertices[1]])
-                positions.append(self.vertex_xyz[vertices[2]])
+                positions.append(self.mesh.vertex_coordinates(vertices[0]))
+                positions.append(self.mesh.vertex_coordinates(vertices[1]))
+                positions.append(self.mesh.vertex_coordinates(vertices[2]))
                 colors.append(c)
                 colors.append(c)
                 colors.append(c)
             elif len(vertices) == 4:
-                positions.append(self.vertex_xyz[vertices[0]])
-                positions.append(self.vertex_xyz[vertices[1]])
-                positions.append(self.vertex_xyz[vertices[2]])
+                positions.append(self.mesh.vertex_coordinates(vertices[0]))
+                positions.append(self.mesh.vertex_coordinates(vertices[1]))
+                positions.append(self.mesh.vertex_coordinates(vertices[2]))
                 colors.append(c)
                 colors.append(c)
                 colors.append(c)
-                positions.append(self.vertex_xyz[vertices[0]])
-                positions.append(self.vertex_xyz[vertices[2]])
-                positions.append(self.vertex_xyz[vertices[3]])
+                positions.append(self.mesh.vertex_coordinates(vertices[0]))
+                positions.append(self.mesh.vertex_coordinates(vertices[2]))
+                positions.append(self.mesh.vertex_coordinates(vertices[3]))
                 colors.append(c)
                 colors.append(c)
                 colors.append(c)
             else:
-                polygon = Polygon([self.vertex_xyz[v] for v in vertices])
+                polygon = Polygon([self.mesh.vertex_coordinates(v) for v in vertices])
                 ears = earclip_polygon(polygon)
                 for ear in ears:
-                    positions.append(self.vertex_xyz[vertices[ear[0]]])
-                    positions.append(self.vertex_xyz[vertices[ear[1]]])
-                    positions.append(self.vertex_xyz[vertices[ear[2]]])
+                    positions.append(self.mesh.vertex_coordinates(vertices[ear[0]]))
+                    positions.append(self.mesh.vertex_coordinates(vertices[ear[1]]))
+                    positions.append(self.mesh.vertex_coordinates(vertices[ear[2]]))
                     colors.append(c)
                     colors.append(c)
                     colors.append(c)

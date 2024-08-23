@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+* Changed `compas_notebook.scene.ThreeBrepObject` to be compatible with `compas>=2.4`.
+* Changed `compas_notebook.scene.ThreeMeshObject` to be compatible with `compas>=2.4`.
+
 ### Removed
 
 
