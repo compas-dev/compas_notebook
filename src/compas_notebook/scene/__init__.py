@@ -24,6 +24,8 @@ from compas.geometry import Torus
 from compas.datastructures import Graph
 from compas.datastructures import Mesh
 
+from .scene import NotebookScene
+
 from .sceneobject import ThreeSceneObject
 
 from .boxobject import ThreeBoxObject
@@ -85,6 +87,7 @@ def register_scene_objects():
 
 
 __all__ = [
+    "NotebookScene",
     "ThreeBoxObject",
     "ThreeCapsuleObject",
     "ThreeConeObject",

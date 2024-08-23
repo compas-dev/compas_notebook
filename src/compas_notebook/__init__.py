@@ -2,6 +2,7 @@ from __future__ import print_function
 
 import os
 
+from .viewer import Viewer
 
 __author__ = ["tom van mele"]
 __copyright__ = "ETH Zurich - Block Research Group"
@@ -18,7 +19,7 @@ DOCS = os.path.abspath(os.path.join(HOME, "docs"))
 TEMP = os.path.abspath(os.path.join(HOME, "temp"))
 
 
-__all__ = ["HOME", "DATA", "DOCS", "TEMP"]
+__all__ = ["HOME", "DATA", "DOCS", "TEMP", "Viewer"]
 
 __all_plugins__ = [
     "compas_notebook.scene",

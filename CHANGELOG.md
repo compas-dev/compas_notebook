@@ -9,9 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* Added custom scene `compas_notebook.scene.Scene`.
+
 ### Changed
 
 ### Removed
+
+* Removed `scene=None` parameter from viewer constructor.
 
 
 ## [0.6.1] 2024-05-12

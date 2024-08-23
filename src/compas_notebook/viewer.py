@@ -6,6 +6,7 @@ from IPython.display import display as ipydisplay
 
 from .config import Config
 from .controller import Controller
+from .scene import NotebookScene
 
 
 class Viewer:
@@ -39,11 +40,10 @@ class Viewer:
     def __init__(
         self,
         config: Config = None,
-        scene: Scene = None,
         controller: Controller = None,
     ):
+        self._scene = None
         self.config = config or Config()
-        self.scene = scene or Scene(context="Notebook")
         self.controller = controller or Controller(viewer=self)
 
         # move this to a UI class
@@ -55,6 +55,17 @@ class Viewer:
     # =============================================================================
     # System methods
     # =============================================================================
+
+    @property
+    def scene(self):
+        if self._scene is None:
+            self._scene = NotebookScene()
+        return self._scene
+
+    @scene.setter
+    def scene(self, scene: Scene) -> None:
+        scene = scene or NotebookScene()
+        self._scene: NotebookScene = NotebookScene.__from_data__(scene.__data__)
 
     def show(self) -> None:
         """Display the viewer in the notebook."""
