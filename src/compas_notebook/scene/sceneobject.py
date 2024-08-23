@@ -6,12 +6,15 @@ from compas.colors import Color
 from compas.geometry import Rotation
 from compas.geometry import Transformation
 from compas.scene import SceneObject
+from compas.scene.descriptors.color import ColorAttribute
 
 Rx = Rotation.from_axis_and_angle([1, 0, 0], 3.14159 / 2)
 
 
 class ThreeSceneObject(SceneObject):
     """Base class for all PyThreeJS scene objects."""
+
+    color = ColorAttribute(default=Color(0.2, 0.2, 0.2))
 
     def y_to_z(self, transformation: Transformation) -> Transformation:
         """Convert a transformation from COMPAS to the ThreeJS coordinate system.
