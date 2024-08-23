@@ -1,5 +1,3 @@
-from typing import Any
-
 import pythreejs as three
 from compas.geometry import Brep
 from compas.scene import GeometryObject
