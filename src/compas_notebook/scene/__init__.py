@@ -83,7 +83,7 @@ def register_scene_objects():
     register(Torus, ThreeTorusObject, context="Notebook")
     register(Mesh, ThreeMeshObject, context="Notebook")
 
-    print("PyThreeJS SceneObjects registered.")
+    # print("PyThreeJS SceneObjects registered.")
 
 
 __all__ = [
