@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+* Fixed bug in intialisation of orbit controls.
+* Changed `compas_notebook.config.CameraConfig.position` to have a default of `[0, -10, 5]`.
+
 ### Removed
 
 

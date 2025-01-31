@@ -8,7 +8,7 @@ from compas.colors import Color
 
 @dataclass
 class CameraConfig:
-    position: list[float]
+    position: list[float] = field(default_factory=lambda: [0, -10, 5])
     target: list[float] = field(default_factory=lambda: [0, 0, 0])
     up: list[float] = field(default_factory=lambda: [0, 0, 1])
     near: float = 0.1

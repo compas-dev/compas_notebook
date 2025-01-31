@@ -128,28 +128,38 @@ class Viewer:
         # camera and controls
 
         if self.config.view.viewport == "top":
-            self.camera3 = three.OrthographicCamera(width / -2, width / 2, height / 2, height / -2, 0.1, 10000)
-            self.camera3.position = self.config.view.camera.position or [0, 0, 1]
+            self.camera3 = three.OrthographicCamera(
+                width / -2,
+                width / 2,
+                height / 2,
+                height / -2,
+                self.config.view.camera.near,
+                self.config.view.camera.far,
+            )
+            self.camera3.position = self.config.view.camera.position
             self.camera3.zoom = 1
 
             self.controls3 = three.OrbitControls(controlling=self.camera3)
             self.controls3.enableRotate = False
-            self.controls3.maxDistance = 1000
-            self.controls3.minDistance = 0.1
+            self.controls3.maxDistance = self.config.view.camera.far
+            self.controls3.minDistance = self.config.view.camera.near
 
         elif self.config.view.viewport == "perspective":
             self.camera3 = three.PerspectiveCamera()
-            self.camera3.position = self.config.view.camera.position or [0, -10, 5]
-            self.camera3.up = self.config.view.camera.up or [0, 0, 1]
+            self.camera3.position = self.config.view.camera.position
+            self.camera3.up = self.config.view.camera.up
             self.camera3.aspect = aspect
-            self.camera3.near = self.config.view.camera.near or 0.1
-            self.camera3.far = self.config.view.camera.far or 1000
-            self.camera3.fov = self.config.view.camera.fov or 50
-            self.camera3.lookAt(self.config.view.camera.target or [0, 0, 0])
+            self.camera3.near = self.config.view.camera.near
+            self.camera3.far = self.config.view.camera.far
+            self.camera3.fov = self.config.view.camera.fov
 
             self.controls3 = three.OrbitControls(controlling=self.camera3)
-            self.controls3.maxDistance = 1000
-            self.controls3.minDistance = 0.1
+            self.controls3.maxDistance = self.config.view.camera.far
+            self.controls3.minDistance = self.config.view.camera.near
+            self.controls3.target = self.config.view.camera.target
+
+            self.camera3.zoom = 1
+            self.camera3.lookAt(self.config.view.camera.target)
 
         else:
             raise NotImplementedError
