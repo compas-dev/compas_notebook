@@ -10,7 +10,6 @@ from compas.geometry import earclip_polygon
 
 
 class MeshShape:
-
     def __init__(self, mesh: Mesh):
         self.mesh = mesh
         self._vertices = None
@@ -145,7 +144,6 @@ def shape_to_facesbuffer(shape: Union[Mesh, Shape], color: Color) -> tuple[list[
         shape = MeshShape(shape)
 
     for face in shape.faces:
-
         if len(face) == 3:
             positions.append(shape.vertices[face[0]])
             positions.append(shape.vertices[face[1]])
