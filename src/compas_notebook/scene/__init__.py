@@ -45,6 +45,8 @@ from .torusobject import ThreeTorusObject
 from .graphobject import ThreeGraphObject
 from .meshobject import ThreeMeshObject
 
+from .groupobject import ThreeGroupObject
+
 
 @plugin(category="drawing-utils", pluggable_name="clear", requires=["pythreejs"])
 def clear_pythreejs(guids=None):
@@ -82,8 +84,7 @@ def register_scene_objects():
     register(Sphere, ThreeSphereObject, context="Notebook")
     register(Torus, ThreeTorusObject, context="Notebook")
     register(Mesh, ThreeMeshObject, context="Notebook")
-
-    # print("PyThreeJS SceneObjects registered.")
+    register(list, ThreeGroupObject, context="Notebook")
 
 
 __all__ = [

@@ -17,6 +17,9 @@ from .meshes import vertices_and_edges_to_threejs
 from .meshes import vertices_and_faces_to_threejs
 from .meshes import vertices_to_threejs
 
+from .buffers import shapes_to_edgesbuffer
+from .buffers import shapes_to_facesbuffer
+
 
 __all__ = [
     "box_to_threejs",
@@ -29,6 +32,8 @@ __all__ = [
     "point_to_threejs",
     "pointcloud_to_threejs",
     "polyline_to_threejs",
+    "shapes_to_edgesbuffer",
+    "shapes_to_facesbuffer",
     "sphere_to_threejs",
     "torus_to_threejs",
     "vertices_and_edges_to_threejs",

@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* Added `compas_notebook.conversions.shapes_to_edgesbuffer`.
+* Added `compas_notebook.conversions.shapes_to_facesbuffer`.
+* Added `compas_notebook.scene.ThreeGroupObject`.
+
 ### Changed
 
 ### Removed
