@@ -1,5 +1,6 @@
 import numpy
 import pythreejs as three
+from compas.colors import Color
 from compas.geometry import Polygon
 from compas.geometry import earclip_polygon
 from compas.scene import MeshObject
@@ -9,6 +10,24 @@ from compas_notebook.scene import ThreeSceneObject
 
 class ThreeMeshObject(ThreeSceneObject, MeshObject):
     """Scene object for drawing mesh."""
+
+    def __init__(
+        self,
+        show_edges=True,
+        vertexcolor=Color(0.0, 0.0, 0.0),
+        edgecolor=Color(0.2, 0.2, 0.2),
+        facecolor=Color(0.9, 0.9, 0.9),
+        vertexsize=0.1,
+        **kwargs,
+    ):
+        super().__init__(
+            show_edges=show_edges,
+            vertexcolor=vertexcolor,
+            edgecolor=edgecolor,
+            facecolor=facecolor,
+            vertexsize=vertexsize,
+            **kwargs,
+        )
 
     def draw(self):
         """Draw the mesh associated with the scene object.

@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+* Changed default node size, node color, and edge color of graph object.
+* Changed default vertex size, vertex color, edge color, and face color of mesh object.
+
 ### Removed
 
 
