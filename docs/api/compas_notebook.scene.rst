@@ -13,9 +13,16 @@ Classes
 
     ThreeBoxObject
     ThreeBrepObject
+    ThreeCapsuleObject
     ThreeConeObject
     ThreeCylinderObject
+    ThreeGraphObject
+    ThreeGroupObject
+    ThreeLineObject
     ThreeMeshObject
+    ThreePointObject
+    ThreePointcloudObject
+    ThreePolygonObject
     ThreePolyhedronObject
     ThreeSceneObject
     ThreeSphereObject
