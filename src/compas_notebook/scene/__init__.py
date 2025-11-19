@@ -13,6 +13,7 @@ from compas.geometry import Capsule
 from compas.geometry import Cone
 from compas.geometry import Cylinder
 from compas.geometry import Line
+from compas.geometry import Frame
 from compas.geometry import Point
 from compas.geometry import Pointcloud
 from compas.geometry import Polygon
@@ -46,6 +47,7 @@ from .graphobject import ThreeGraphObject
 from .meshobject import ThreeMeshObject
 
 from .groupobject import ThreeGroupObject
+from .frameobject import ThreeFrameObject
 
 
 @plugin(category="drawing-utils", pluggable_name="clear", requires=["pythreejs"])
@@ -75,6 +77,7 @@ def register_scene_objects():
     register(Cone, ThreeConeObject, context="Notebook")
     register(Cylinder, ThreeCylinderObject, context="Notebook")
     register(Graph, ThreeGraphObject, context="Notebook")
+    register(Frame, ThreeFrameObject, context="Notebook")
     register(Line, ThreeLineObject, context="Notebook")
     register(Point, ThreePointObject, context="Notebook")
     register(Pointcloud, ThreePointcloudObject, context="Notebook")
@@ -86,20 +89,20 @@ def register_scene_objects():
     register(Mesh, ThreeMeshObject, context="Notebook")
     register(list, ThreeGroupObject, context="Notebook")
 
-
-__all__ = [
-    "NotebookScene",
-    "ThreeBoxObject",
-    "ThreeCapsuleObject",
-    "ThreeConeObject",
-    "ThreeCylinderObject",
-    "ThreeGraphObject",
-    "ThreePointObject",
-    "ThreePointcloudObject",
-    "ThreePolygonObject",
-    "ThreePolyhedronObject",
-    "ThreePolylineObject",
-    "ThreeSceneObject",
-    "ThreeSphereObject",
-    "ThreeTorusObject",
-]
+# # yuck java
+# __all__ = [
+#     "NotebookScene",
+#     "ThreeBoxObject",
+#     "ThreeCapsuleObject",
+#     "ThreeConeObject",
+#     "ThreeCylinderObject",
+#     "ThreeGraphObject",
+#     "ThreePointObject",
+#     "ThreePointcloudObject",
+#     "ThreePolygonObject",
+#     "ThreePolyhedronObject",
+#     "ThreePolylineObject",
+#     "ThreeSceneObject",
+#     "ThreeSphereObject",
+#     "ThreeTorusObject",
+# ]

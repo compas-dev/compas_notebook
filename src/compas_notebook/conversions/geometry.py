@@ -1,3 +1,4 @@
+import re
 import numpy
 import pythreejs as three
 from compas.geometry import Box
@@ -8,9 +9,11 @@ from compas.geometry import Pointcloud
 from compas.geometry import Polyline
 from compas.geometry import Sphere
 from compas.geometry import Torus
+from compas.geometry import Frame
+from compas.geometry import Line
 
 
-def line_to_threejs(line: Point) -> three.BufferGeometry:
+def line_to_threejs(line: Line) -> three.BufferGeometry:
     """Convert a COMPAS line to PyThreeJS.
 
     Parameters
@@ -26,6 +29,39 @@ def line_to_threejs(line: Point) -> three.BufferGeometry:
     vertices = numpy.array([line.start, line.end], dtype=numpy.float32)
     geometry = three.BufferGeometry(attributes={"position": three.BufferAttribute(vertices, normalized=False)})
     return geometry
+
+
+def frame_to_threejs(frame: Frame) -> list[three.BufferGeometry]:
+    """Convert a COMPAS frame to PyThreeJS.
+
+    Parameters
+    ----------
+    frame : :class:`compas.geometry.Frame`
+        The frame to convert.
+
+    Returns
+    -------
+    list[three.BufferGeometry]
+
+    """
+
+    # create lines for each axis
+    _x_line = Line(frame.point, frame.point + frame.xaxis)
+    _y_line = Line(frame.point, frame.point + frame.yaxis)
+    _z_line = Line(frame.point, frame.point + frame.zaxis)
+
+    # convert lines to threejs vertex buffers
+    xline_verts = line_to_threejs(_x_line)
+    yline_verts = line_to_threejs(_y_line)
+    zline_verts = line_to_threejs(_z_line)
+
+    # convert from vertex buffers to line objects
+    xline_lines = three.Line(xline_verts, three.LineBasicMaterial(color="red"))
+    yline_lines = three.Line(yline_verts, three.LineBasicMaterial(color="green"))
+    zline_lines = three.Line(zline_verts, three.LineBasicMaterial(color="blue"))
+
+    result = [xline_lines, yline_lines, zline_lines]
+    return result
 
 
 def point_to_threejs(point: Point) -> three.SphereGeometry:
