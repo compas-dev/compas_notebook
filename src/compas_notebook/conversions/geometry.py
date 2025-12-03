@@ -2,15 +2,21 @@ import re
 import numpy
 import pythreejs as three
 from compas.geometry import Box
+from compas.geometry import Circle
 from compas.geometry import Cone
+from compas.geometry import Curve
 from compas.geometry import Cylinder
+from compas.geometry import Ellipse
+from compas.geometry import Frame
+from compas.geometry import Line
+from compas.geometry import Plane
 from compas.geometry import Point
 from compas.geometry import Pointcloud
 from compas.geometry import Polyline
 from compas.geometry import Sphere
+from compas.geometry import Surface
 from compas.geometry import Torus
-from compas.geometry import Frame
-from compas.geometry import Line
+from compas.geometry import Vector
 
 
 def line_to_threejs(line: Line) -> three.BufferGeometry:
@@ -127,6 +133,245 @@ def polyline_to_threejs(polyline: Polyline) -> three.BufferGeometry:
     vertices = numpy.array(polyline.points, dtype=numpy.float32)
     geometry = three.BufferGeometry(attributes={"position": three.BufferAttribute(vertices, normalized=False)})
     return geometry
+
+
+def circle_to_threejs(circle: Circle, max_angle: float = 5.0) -> three.BufferGeometry:
+    """Convert a COMPAS circle to PyThreeJS.
+
+    Parameters
+    ----------
+    circle : :class:`compas.geometry.Circle`
+        The circle to convert.
+    max_angle : float, optional
+        Maximum angle in degrees between segments.
+
+    Returns
+    -------
+    :class:`three.BufferGeometry`
+
+    """
+    import math
+
+    n = max(8, int(math.ceil(360.0 / max_angle)))
+    polyline = circle.to_polyline(n=n)
+    vertices = numpy.array(polyline.points, dtype=numpy.float32)
+    geometry = three.BufferGeometry(attributes={"position": three.BufferAttribute(vertices, normalized=False)})
+    return geometry
+
+
+def ellipse_to_threejs(ellipse: Ellipse, max_angle: float = 5.0) -> three.BufferGeometry:
+    """Convert a COMPAS ellipse to PyThreeJS.
+
+    Parameters
+    ----------
+    ellipse : :class:`compas.geometry.Ellipse`
+        The ellipse to convert.
+    max_angle : float, optional
+        Maximum angle in degrees between segments.
+
+    Returns
+    -------
+    :class:`three.BufferGeometry`
+
+    """
+    import math
+
+    n = max(8, int(math.ceil(360.0 / max_angle)))
+    polyline = ellipse.to_polyline(n=n)
+    vertices = numpy.array(polyline.points, dtype=numpy.float32)
+    geometry = three.BufferGeometry(attributes={"position": three.BufferAttribute(vertices, normalized=False)})
+    return geometry
+
+
+def vector_to_threejs(vector: Vector, scale: float = 1.0) -> list[three.Object3D]:
+    """Convert a COMPAS vector to PyThreeJS as arrow.
+
+    Parameters
+    ----------
+    vector : :class:`compas.geometry.Vector`
+        The vector to convert.
+    scale : float, optional
+        Scale factor for vector length.
+
+    Returns
+    -------
+    list[three.Object3D]
+        Line and cone representing the arrow.
+
+    """
+    # Line from origin to vector * scale
+    line = Line([0, 0, 0], vector * scale)
+    line_geom = line_to_threejs(line)
+    line_obj = three.Line(line_geom, three.LineBasicMaterial(color="blue"))
+
+    # Cone head at tip (10% of length, positioned at end)
+    length = vector.length * scale
+    cone_height = length * 0.1
+    cone_radius = cone_height * 0.3
+
+    # Position cone at vector tip
+    cone_geom = three.CylinderGeometry(
+        radiusTop=0,
+        radiusBottom=cone_radius,
+        height=cone_height,
+        radialSegments=8,
+    )
+    cone_obj = three.Mesh(cone_geom, three.MeshBasicMaterial(color="blue"))
+
+    # Compute cone position and rotation
+    # Cone should point in vector direction
+    tip = vector * scale
+    cone_obj.position = (tip.x, tip.y, tip.z)
+
+    # Align cone with vector direction
+    # Three.js cylinder default is Y-up, need to rotate to align with vector
+    normalized = vector.unitized()
+    cone_obj.quaternion = _vector_to_quaternion(normalized)
+
+    return [line_obj, cone_obj]
+
+
+def _vector_to_quaternion(vector):
+    """Helper to compute quaternion for aligning Y-axis with vector."""
+    import math
+
+    # Default direction is Y-up [0, 1, 0]
+    y_axis = Vector(0, 1, 0)
+
+    # Compute rotation axis (cross product)
+    axis = y_axis.cross(vector)
+
+    # Compute rotation angle
+    angle = math.acos(max(-1, min(1, y_axis.dot(vector))))
+
+    if axis.length < 1e-10:
+        # Vector is parallel or anti-parallel to Y-axis
+        if vector.y > 0:
+            return (0, 0, 0, 1)  # No rotation
+        else:
+            return (0, 0, 1, 0)  # 180 degree rotation around Z
+
+    # Normalize axis
+    axis = axis.unitized()
+
+    # Convert axis-angle to quaternion
+    half_angle = angle / 2
+    s = math.sin(half_angle)
+    return (axis.x * s, axis.y * s, axis.z * s, math.cos(half_angle))
+
+
+def plane_to_threejs(plane: Plane, size: float = 1.0, grid: int = 10) -> list[three.Object3D]:
+    """Convert a COMPAS plane to PyThreeJS as grid.
+
+    Parameters
+    ----------
+    plane : :class:`compas.geometry.Plane`
+        The plane to convert.
+    size : float, optional
+        Size of the grid visualization.
+    grid : int, optional
+        Number of grid lines in each direction.
+
+    Returns
+    -------
+    list[three.Object3D]
+        Grid lines in the plane.
+
+    """
+    objects = []
+
+    # Get frame from plane to have xaxis and yaxis
+    frame = Frame.from_plane(plane)
+
+    # Create grid lines along xaxis and yaxis directions
+    step = size / grid
+    half = size / 2
+
+    # Lines parallel to xaxis
+    for i in range(grid + 1):
+        offset = -half + i * step
+        start = frame.point + frame.yaxis * offset - frame.xaxis * half
+        end = frame.point + frame.yaxis * offset + frame.xaxis * half
+        line = Line(start, end)
+        line_geom = line_to_threejs(line)
+        line_obj = three.Line(line_geom, three.LineBasicMaterial(color="lightgray"))
+        objects.append(line_obj)
+
+    # Lines parallel to yaxis
+    for i in range(grid + 1):
+        offset = -half + i * step
+        start = frame.point + frame.xaxis * offset - frame.yaxis * half
+        end = frame.point + frame.xaxis * offset + frame.yaxis * half
+        line = Line(start, end)
+        line_geom = line_to_threejs(line)
+        line_obj = three.Line(line_geom, three.LineBasicMaterial(color="lightgray"))
+        objects.append(line_obj)
+
+    return objects
+
+
+def curve_to_threejs(curve: Curve, resolution: int = 100) -> three.BufferGeometry:
+    """Convert a COMPAS curve to PyThreeJS.
+
+    Parameters
+    ----------
+    curve : :class:`compas.geometry.Curve`
+        The curve to convert.
+    resolution : int, optional
+        Number of points for discretization.
+
+    Returns
+    -------
+    :class:`three.BufferGeometry`
+
+    """
+    polyline = curve.to_polyline(n=resolution)
+    vertices = numpy.array(polyline.points, dtype=numpy.float32)
+    geometry = three.BufferGeometry(attributes={"position": three.BufferAttribute(vertices, normalized=False)})
+    return geometry
+
+
+def surface_to_threejs(surface: Surface, resolution_u: int = 20, resolution_v: int = 20):
+    """Convert a COMPAS surface to PyThreeJS.
+
+    Parameters
+    ----------
+    surface : :class:`compas.geometry.Surface`
+        The surface to convert.
+    resolution_u : int, optional
+        Number of divisions in U direction.
+    resolution_v : int, optional
+        Number of divisions in V direction.
+
+    Returns
+    -------
+    tuple[three.Mesh, three.LineSegments]
+        Mesh and edge visualization.
+
+    """
+    from compas_notebook.conversions.meshes import vertices_and_edges_to_threejs
+    from compas_notebook.conversions.meshes import vertices_and_faces_to_threejs
+
+    vertices, faces = surface.to_vertices_and_faces(nu=resolution_u, nv=resolution_v)
+
+    # Create faces
+    faces_geom = vertices_and_faces_to_threejs(vertices, faces)
+    mesh = three.Mesh(faces_geom, three.MeshBasicMaterial(color="lightblue", side="DoubleSide"))
+
+    # Create edges
+    edges = []
+    for face in faces:
+        n = len(face)
+        for i in range(n):
+            edge = (face[i], face[(i + 1) % n])
+            # Add edge if not duplicate
+            if (edge[1], edge[0]) not in edges:
+                edges.append(edge)
+
+    edges_geom = vertices_and_edges_to_threejs(vertices, edges)
+    lines = three.LineSegments(edges_geom, three.LineBasicMaterial(color="black"))
+
+    return [mesh, lines]
 
 
 # =============================================================================
