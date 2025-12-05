@@ -7,6 +7,9 @@
 
 Notebook visualization backend for COMPAS using pythreejs.
 
+![compas notebook vscode](compas_notebook-vscode.png)
+
+
 ## Documentation
 
 To get started with `compas_notebook` have a look at [the documentation](https://compas.dev/compas_notebook).
