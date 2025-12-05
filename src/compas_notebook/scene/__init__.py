@@ -106,20 +106,3 @@ def register_scene_objects():
     register(Vector, ThreeVectorObject, context="Notebook")
     register(list, ThreeGroupObject, context="Notebook")
 
-# # yuck java
-# __all__ = [
-#     "NotebookScene",
-#     "ThreeBoxObject",
-#     "ThreeCapsuleObject",
-#     "ThreeConeObject",
-#     "ThreeCylinderObject",
-#     "ThreeGraphObject",
-#     "ThreePointObject",
-#     "ThreePointcloudObject",
-#     "ThreePolygonObject",
-#     "ThreePolyhedronObject",
-#     "ThreePolylineObject",
-#     "ThreeSceneObject",
-#     "ThreeSphereObject",
-#     "ThreeTorusObject",
-# ]

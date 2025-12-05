@@ -1,4 +1,5 @@
 import re
+import math
 import numpy
 import pythreejs as three
 from compas.geometry import Box
@@ -17,6 +18,8 @@ from compas.geometry import Sphere
 from compas.geometry import Surface
 from compas.geometry import Torus
 from compas.geometry import Vector
+from compas_notebook.conversions.meshes import vertices_and_edges_to_threejs
+from compas_notebook.conversions.meshes import vertices_and_faces_to_threejs
 
 
 def line_to_threejs(line: Line) -> three.BufferGeometry:
@@ -32,7 +35,7 @@ def line_to_threejs(line: Line) -> three.BufferGeometry:
     :class:`three.BufferGeometry`
 
     """
-    vertices = numpy.array([line.start, line.end], dtype=numpy.float32)
+    vertices = numpy.array([line.start, line.end], dtype=numpy.float64)
     geometry = three.BufferGeometry(attributes={"position": three.BufferAttribute(vertices, normalized=False)})
     return geometry
 
@@ -53,8 +56,8 @@ def frame_to_threejs(frame: Frame) -> list[three.BufferGeometry]:
 
     # create lines for each axis
     _x_line = Line(frame.point, frame.point + frame.xaxis)
-    _y_line = Line(frame.point, frame.point + frame.yaxis)
-    _z_line = Line(frame.point, frame.point + frame.zaxis)
+    _y_line = Line.from_point_and_vector(frame.point, frame.yaxis)
+    _z_line = Line.from_point_and_vector(frame.point, frame.zaxis)
 
     # convert lines to threejs vertex buffers
     xline_verts = line_to_threejs(_x_line)
@@ -90,7 +93,7 @@ def point_to_threejs(point: Point) -> three.SphereGeometry:
     BufferGeometry(...)
 
     """
-    vertices = numpy.array([point], dtype=numpy.float32)
+    vertices = numpy.array([point], dtype=numpy.float64)
     geometry = three.BufferGeometry(attributes={"position": three.BufferAttribute(vertices, normalized=False)})
     return geometry
 
@@ -112,7 +115,7 @@ def pointcloud_to_threejs(pointcloud: Pointcloud) -> three.SphereGeometry:
     >>>
 
     """
-    vertices = numpy.array(pointcloud.points, dtype=numpy.float32)
+    vertices = numpy.array(pointcloud.points, dtype=numpy.float64)
     geometry = three.BufferGeometry(attributes={"position": three.BufferAttribute(vertices, normalized=False)})
     return geometry
 
@@ -130,7 +133,7 @@ def polyline_to_threejs(polyline: Polyline) -> three.BufferGeometry:
     :class:`three.BufferGeometry`
 
     """
-    vertices = numpy.array(polyline.points, dtype=numpy.float32)
+    vertices = numpy.array(polyline.points, dtype=numpy.float64)
     geometry = three.BufferGeometry(attributes={"position": three.BufferAttribute(vertices, normalized=False)})
     return geometry
 
@@ -150,11 +153,10 @@ def circle_to_threejs(circle: Circle, max_angle: float = 5.0) -> three.BufferGeo
     :class:`three.BufferGeometry`
 
     """
-    import math
 
     n = max(8, int(math.ceil(360.0 / max_angle)))
     polyline = circle.to_polyline(n=n)
-    vertices = numpy.array(polyline.points, dtype=numpy.float32)
+    vertices = numpy.array(polyline.points, dtype=numpy.float64)
     geometry = three.BufferGeometry(attributes={"position": three.BufferAttribute(vertices, normalized=False)})
     return geometry
 
@@ -174,11 +176,9 @@ def ellipse_to_threejs(ellipse: Ellipse, max_angle: float = 5.0) -> three.Buffer
     :class:`three.BufferGeometry`
 
     """
-    import math
-
     n = max(8, int(math.ceil(360.0 / max_angle)))
     polyline = ellipse.to_polyline(n=n)
-    vertices = numpy.array(polyline.points, dtype=numpy.float32)
+    vertices = numpy.array(polyline.points, dtype=numpy.float64)
     geometry = three.BufferGeometry(attributes={"position": three.BufferAttribute(vertices, normalized=False)})
     return geometry
 
@@ -326,7 +326,7 @@ def curve_to_threejs(curve: Curve, resolution: int = 100) -> three.BufferGeometr
 
     """
     polyline = curve.to_polyline(n=resolution)
-    vertices = numpy.array(polyline.points, dtype=numpy.float32)
+    vertices = numpy.array(polyline.points, dtype=numpy.float64)
     geometry = three.BufferGeometry(attributes={"position": three.BufferAttribute(vertices, normalized=False)})
     return geometry
 
@@ -349,9 +349,6 @@ def surface_to_threejs(surface: Surface, resolution_u: int = 20, resolution_v: i
         Mesh and edge visualization.
 
     """
-    from compas_notebook.conversions.meshes import vertices_and_edges_to_threejs
-    from compas_notebook.conversions.meshes import vertices_and_faces_to_threejs
-
     vertices, faces = surface.to_vertices_and_faces(nu=resolution_u, nv=resolution_v)
 
     # Create faces
