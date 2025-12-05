@@ -1,3 +1,4 @@
+# ruff: noqa: F401
 """This package provides scene object plugins for visualising COMPAS objects in Jupyter Notebooks using three.
 When working in a notebook, :class:`compas.scene.SceneObject`
 will automatically use the corresponding PyThreeJS scene object for each COMPAS object type.
@@ -110,29 +111,3 @@ def register_scene_objects():
     register(Vector, ThreeVectorObject, context="Notebook")
     register(list, ThreeGroupObject, context="Notebook")
 
-
-_ = [ 
-    "Box",
-    "Brep",
-    "Capsule",
-    "Circle",
-    "Cone",
-    "Curve",
-    "Cylinder",
-    "Dot",
-    "Ellipse",
-    "Frame",
-    "Graph",
-    "Line",
-    "Mesh",
-    "Plane",
-    "Point",
-    "Pointcloud",
-    "Polygon",
-    "Polyhedron",
-    "Polyline",
-    "Sphere",
-    "Surface",
-    "Torus",
-    "Vector",
-]
