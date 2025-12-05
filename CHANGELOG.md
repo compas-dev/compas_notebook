@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* Added support for `frames, circle, ellipse, vector, plane, curve, analystical surface primitives`
+* Dot command added 
+
 ### Changed
 
 ### Removed
