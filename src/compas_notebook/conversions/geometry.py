@@ -18,6 +18,7 @@ from compas.geometry import Sphere
 from compas.geometry import Surface
 from compas.geometry import Torus
 from compas.geometry import Vector
+from compas_notebook.geometry import Dot
 from compas_notebook.conversions.meshes import vertices_and_edges_to_threejs
 from compas_notebook.conversions.meshes import vertices_and_faces_to_threejs
 
@@ -35,7 +36,7 @@ def line_to_threejs(line: Line) -> three.BufferGeometry:
     :class:`three.BufferGeometry`
 
     """
-    vertices = numpy.array([line.start, line.end], dtype=numpy.float64)
+    vertices = numpy.array([line.start, line.end], dtype=numpy.float32)
     geometry = three.BufferGeometry(attributes={"position": three.BufferAttribute(vertices, normalized=False)})
     return geometry
 
@@ -93,7 +94,7 @@ def point_to_threejs(point: Point) -> three.SphereGeometry:
     BufferGeometry(...)
 
     """
-    vertices = numpy.array([point], dtype=numpy.float64)
+    vertices = numpy.array([point], dtype=numpy.float32)
     geometry = three.BufferGeometry(attributes={"position": three.BufferAttribute(vertices, normalized=False)})
     return geometry
 
@@ -115,7 +116,7 @@ def pointcloud_to_threejs(pointcloud: Pointcloud) -> three.SphereGeometry:
     >>>
 
     """
-    vertices = numpy.array(pointcloud.points, dtype=numpy.float64)
+    vertices = numpy.array(pointcloud.points, dtype=numpy.float32)
     geometry = three.BufferGeometry(attributes={"position": three.BufferAttribute(vertices, normalized=False)})
     return geometry
 
@@ -133,7 +134,7 @@ def polyline_to_threejs(polyline: Polyline) -> three.BufferGeometry:
     :class:`three.BufferGeometry`
 
     """
-    vertices = numpy.array(polyline.points, dtype=numpy.float64)
+    vertices = numpy.array(polyline.points, dtype=numpy.float32)
     geometry = three.BufferGeometry(attributes={"position": three.BufferAttribute(vertices, normalized=False)})
     return geometry
 
@@ -156,7 +157,7 @@ def circle_to_threejs(circle: Circle, max_angle: float = 5.0) -> three.BufferGeo
 
     n = max(8, int(math.ceil(360.0 / max_angle)))
     polyline = circle.to_polyline(n=n)
-    vertices = numpy.array(polyline.points, dtype=numpy.float64)
+    vertices = numpy.array(polyline.points, dtype=numpy.float32)
     geometry = three.BufferGeometry(attributes={"position": three.BufferAttribute(vertices, normalized=False)})
     return geometry
 
@@ -178,7 +179,7 @@ def ellipse_to_threejs(ellipse: Ellipse, max_angle: float = 5.0) -> three.Buffer
     """
     n = max(8, int(math.ceil(360.0 / max_angle)))
     polyline = ellipse.to_polyline(n=n)
-    vertices = numpy.array(polyline.points, dtype=numpy.float64)
+    vertices = numpy.array(polyline.points, dtype=numpy.float32)
     geometry = three.BufferGeometry(attributes={"position": three.BufferAttribute(vertices, normalized=False)})
     return geometry
 
@@ -326,7 +327,7 @@ def curve_to_threejs(curve: Curve, resolution: int = 100) -> three.BufferGeometr
 
     """
     polyline = curve.to_polyline(n=resolution)
-    vertices = numpy.array(polyline.points, dtype=numpy.float64)
+    vertices = numpy.array(polyline.points, dtype=numpy.float32)
     geometry = three.BufferGeometry(attributes={"position": three.BufferAttribute(vertices, normalized=False)})
     return geometry
 
@@ -505,3 +506,34 @@ def torus_to_threejs(torus: Torus) -> three.TorusGeometry:
         radialSegments=64,
         tubularSegments=32,
     )
+
+
+def dot_to_threejs(dot: Dot, fontsize: int = 48, color: str = "white") -> three.Sprite:
+    """Convert a COMPAS Dot to PyThreeJS Sprite.
+
+    The sprite maintains constant screen size regardless of zoom level.
+
+    Parameters
+    ----------
+    dot : :class:`compas_notebook.geometry.Dot`
+        The dot to convert.
+    fontsize : int, optional
+        Font size for the text texture.
+    color : str, optional
+        Text color.
+
+    Returns
+    -------
+    :class:`three.Sprite`
+        A sprite with text texture positioned at the dot location.
+
+    """
+    texture = three.TextTexture(string=dot.text, size=fontsize, color=color, squareTexture=False)
+    material = three.SpriteMaterial(map=texture, sizeAttenuation=False, transparent=True)
+    sprite = three.Sprite(material=material)
+    sprite.position = [dot.point.x, dot.point.y, dot.point.z]
+    # scale based on text length - roughly 0.6 width per character
+    aspect = len(dot.text) * 0.6
+    scale = 0.025
+    sprite.scale = [scale * aspect, scale, 1]
+    return sprite

@@ -3,6 +3,7 @@ from .colors import color_to_threejs
 from .geometry import box_to_threejs
 from .geometry import cone_to_threejs
 from .geometry import cylinder_to_threejs
+from .geometry import dot_to_threejs
 from .geometry import line_to_threejs
 from .geometry import point_to_threejs
 from .geometry import pointcloud_to_threejs
@@ -26,6 +27,7 @@ __all__ = [
     "color_to_threejs",
     "cone_to_threejs",
     "cylinder_to_threejs",
+    "dot_to_threejs",
     "line_to_threejs",
     "nodes_and_edges_to_threejs",
     "nodes_to_threejs",
