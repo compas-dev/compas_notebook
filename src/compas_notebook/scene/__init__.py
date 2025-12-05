@@ -110,3 +110,29 @@ def register_scene_objects():
     register(Vector, ThreeVectorObject, context="Notebook")
     register(list, ThreeGroupObject, context="Notebook")
 
+
+_ = [ 
+    "Box",
+    "Brep",
+    "Capsule",
+    "Circle",
+    "Cone",
+    "Curve",
+    "Cylinder",
+    "Dot",
+    "Ellipse",
+    "Frame",
+    "Graph",
+    "Line",
+    "Mesh",
+    "Plane",
+    "Point",
+    "Pointcloud",
+    "Polygon",
+    "Polyhedron",
+    "Polyline",
+    "Sphere",
+    "Surface",
+    "Torus",
+    "Vector",
+]
