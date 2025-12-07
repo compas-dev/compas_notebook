@@ -17,35 +17,35 @@ class MeshShape:
         self._faces = None
 
     @property
-    def vertices(self):
+    def vertices(self) -> list[list[float]]:
         if not self._vertices:
             self._vertices = self.mesh.vertices_attributes("xyz")
-        return self._vertices
+        return self._vertices  # type: ignore
 
     @property
-    def edges(self):
+    def edges(self) -> list[tuple[int, int]]:
         if not self._edges:
             self._edges = list(self.mesh.edges())
-        return self._edges
+        return self._edges  # type: ignore
 
     @property
-    def faces(self):
+    def faces(self) -> list[list[int]]:
         if not self._faces:
             self._faces = [self.mesh.face_vertices(face) for face in self.mesh.faces()]
         return self._faces
 
 
 def shapes_to_edgesbuffer(
-    shapes: list[Mesh, Shape],
+    shapes: list[Mesh | Shape],
     color: Color,
 ) -> three.LineSegments:
     """Convert the combined edges of a collection of shapes to one line segment buffer.
 
     Parameters
     ----------
-    shapes : list[:class:`compas.datastructures.Mesh`, :class:`compas.geometry.Shape`]
+    shapes
         The shape collection.
-    color : :class:`compas.colors.Color`
+    color
         The color of the edges.
 
     Returns
@@ -84,9 +84,9 @@ def shapes_to_facesbuffer(
 
     Parameters
     ----------
-    shapes : list[:class:`compas.datastructures.Mesh`, :class:`compas.geometry.Shape`]
+    shapes
         The shape collection.
-    color : :class:`compas.colors.Color`
+    color
         The color of the faces.
 
     Returns
@@ -125,11 +125,13 @@ def shape_to_edgesbuffer(shape: Union[Mesh, Shape], color: Color) -> tuple[list[
     colors = []
 
     if isinstance(shape, Mesh):
-        shape = MeshShape(shape)
+        meshshape = MeshShape(shape)
+    else:
+        meshshape = shape
 
-    for u, v in shape.edges:
-        positions.append(shape.vertices[u])
-        positions.append(shape.vertices[v])
+    for u, v in meshshape.edges:
+        positions.append(meshshape.vertices[u])
+        positions.append(meshshape.vertices[v])
         colors.append(color)
         colors.append(color)
 
@@ -141,37 +143,40 @@ def shape_to_facesbuffer(shape: Union[Mesh, Shape], color: Color) -> tuple[list[
     colors = []
 
     if isinstance(shape, Mesh):
-        shape = MeshShape(shape)
+        meshshape = MeshShape(shape)
+    else:
+        meshshape = shape
 
-    for face in shape.faces:
+    for face in meshshape.faces:
         if len(face) == 3:
-            positions.append(shape.vertices[face[0]])
-            positions.append(shape.vertices[face[1]])
-            positions.append(shape.vertices[face[2]])
+            positions.append(meshshape.vertices[face[0]])
+            positions.append(meshshape.vertices[face[1]])
+            positions.append(meshshape.vertices[face[2]])
+            colors.append(color)
             colors.append(color)
             colors.append(color)
             colors.append(color)
 
         elif len(face) == 4:
-            positions.append(shape.vertices[face[0]])
-            positions.append(shape.vertices[face[1]])
-            positions.append(shape.vertices[face[2]])
+            positions.append(meshshape.vertices[face[0]])
+            positions.append(meshshape.vertices[face[1]])
+            positions.append(meshshape.vertices[face[2]])
             colors.append(color)
             colors.append(color)
             colors.append(color)
-            positions.append(shape.vertices[face[0]])
-            positions.append(shape.vertices[face[2]])
-            positions.append(shape.vertices[face[3]])
+            positions.append(meshshape.vertices[face[0]])
+            positions.append(meshshape.vertices[face[2]])
+            positions.append(meshshape.vertices[face[3]])
             colors.append(color)
             colors.append(color)
             colors.append(color)
 
         else:
-            ears = earclip_polygon(Polygon([shape.vertices[v] for v in face]))
+            ears = earclip_polygon(Polygon([meshshape.vertices[v] for v in face]))
             for ear in ears:
-                positions.append(shape.vertices[ear[0]])
-                positions.append(shape.vertices[ear[1]])
-                positions.append(shape.vertices[ear[2]])
+                positions.append(meshshape.vertices[ear[0]])
+                positions.append(meshshape.vertices[ear[1]])
+                positions.append(meshshape.vertices[ear[2]])
                 colors.append(color)
                 colors.append(color)
                 colors.append(color)

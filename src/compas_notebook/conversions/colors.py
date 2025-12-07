@@ -7,12 +7,12 @@ def color_to_threejs(color: Color) -> MeshBasicMaterial:
 
     Parameters
     ----------
-    color : :class:`compas.colors.Color`
+    color
         The color to convert.
 
     Returns
     -------
-    :class:`three.MeshBasicMaterial`
+    three.MeshBasicMaterials
         The PyThreeJS material.
 
     Examples

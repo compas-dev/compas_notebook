@@ -29,12 +29,12 @@ def line_to_threejs(line: Line) -> three.BufferGeometry:
 
     Parameters
     ----------
-    line : :class:`compas.geometry.Line`
+    line
         The line to convert.
 
     Returns
     -------
-    :class:`three.BufferGeometry`
+    three.BufferGeometry
 
     """
     vertices = numpy.array([line.start, line.end], dtype=numpy.float32)
@@ -47,7 +47,7 @@ def frame_to_threejs(frame: Frame) -> list[three.BufferGeometry]:
 
     Parameters
     ----------
-    frame : :class:`compas.geometry.Frame`
+    frame
         The frame to convert.
 
     Returns
@@ -80,12 +80,12 @@ def point_to_threejs(point: Point) -> three.SphereGeometry:
 
     Parameters
     ----------
-    point : :class:`compas.geometry.Point`
+    point
         The point to convert.
 
     Returns
     -------
-    :class:`three.BufferGeometry`
+    three.BufferGeometry
 
     Examples
     --------
@@ -105,12 +105,12 @@ def pointcloud_to_threejs(pointcloud: Pointcloud) -> three.SphereGeometry:
 
     Parameters
     ----------
-    pointcloud : :class:`compas.geometry.Pointcloud`
+    pointcloud
         The pointcloud to convert.
 
     Returns
     -------
-    :class:`three.BufferGeometry`
+    three.BufferGeometry
 
     Examples
     --------
@@ -127,12 +127,12 @@ def polyline_to_threejs(polyline: Polyline) -> three.BufferGeometry:
 
     Parameters
     ----------
-    polyline : :class:`compas.geometry.Polyline`
+    polyline
         The polyline to convert.
 
     Returns
     -------
-    :class:`three.BufferGeometry`
+    three.BufferGeometry
 
     """
     vertices = numpy.array(polyline.points, dtype=numpy.float32)
@@ -145,14 +145,14 @@ def circle_to_threejs(circle: Circle, max_angle: float = 5.0) -> three.BufferGeo
 
     Parameters
     ----------
-    circle : :class:`compas.geometry.Circle`
+    circle
         The circle to convert.
-    max_angle : float, optional
+    max_angle
         Maximum angle in degrees between segments.
 
     Returns
     -------
-    :class:`three.BufferGeometry`
+    three.BufferGeometry
 
     """
 
@@ -168,14 +168,14 @@ def ellipse_to_threejs(ellipse: Ellipse, max_angle: float = 5.0) -> three.Buffer
 
     Parameters
     ----------
-    ellipse : :class:`compas.geometry.Ellipse`
+    ellipse
         The ellipse to convert.
-    max_angle : float, optional
+    max_angle
         Maximum angle in degrees between segments.
 
     Returns
     -------
-    :class:`three.BufferGeometry`
+    three.BufferGeometry
 
     """
     n = max(8, int(math.ceil(360.0 / max_angle)))
@@ -190,9 +190,9 @@ def vector_to_threejs(vector: Vector, scale: float = 1.0) -> list[three.Object3D
 
     Parameters
     ----------
-    vector : :class:`compas.geometry.Vector`
+    vector
         The vector to convert.
-    scale : float, optional
+    scale
         Scale factor for vector length.
 
     Returns
@@ -267,11 +267,11 @@ def plane_to_threejs(plane: Plane, size: float = 1.0, grid: int = 10) -> list[th
 
     Parameters
     ----------
-    plane : :class:`compas.geometry.Plane`
+    plane
         The plane to convert.
-    size : float, optional
+    size
         Size of the grid visualization.
-    grid : int, optional
+    grid
         Number of grid lines in each direction.
 
     Returns
@@ -317,14 +317,14 @@ def curve_to_threejs(curve: Curve, resolution: int = 100) -> three.BufferGeometr
 
     Parameters
     ----------
-    curve : :class:`compas.geometry.Curve`
+    curve
         The curve to convert.
-    resolution : int, optional
+    resolution
         Number of points for discretization.
 
     Returns
     -------
-    :class:`three.BufferGeometry`
+    three.BufferGeometry
 
     """
     polyline = curve.to_polyline(n=resolution)
@@ -338,11 +338,11 @@ def surface_to_threejs(surface: Surface, resolution_u: int = 20, resolution_v: i
 
     Parameters
     ----------
-    surface : :class:`compas.geometry.Surface`
+    surface
         The surface to convert.
-    resolution_u : int, optional
+    resolution_u
         Number of divisions in U direction.
-    resolution_v : int, optional
+    resolution_v
         Number of divisions in V direction.
 
     Returns
@@ -383,12 +383,12 @@ def box_to_threejs(box: Box) -> three.BoxGeometry:
 
     Parameters
     ----------
-    box : :class:`compas.geometry.Box`
+    box
         The box to convert.
 
     Returns
     -------
-    :class:`three.BoxGeometry`
+    three.BoxGeometry
 
     Examples
     --------
@@ -406,12 +406,12 @@ def cone_to_threejs(cone: Cone) -> three.CylinderGeometry:
 
     Parameters
     ----------
-    cone : :class:`compas.geometry.Cone`
+    cone
         The cone to convert.
 
     Returns
     -------
-    :class:`three.CylinderGeometry`
+    three.CylinderGeometry
 
     Examples
     --------
@@ -434,12 +434,12 @@ def cylinder_to_threejs(cylinder: Cylinder) -> three.CylinderGeometry:
 
     Parameters
     ----------
-    cylinder : :class:`compas.geometry.Cylinder`
+    cylinder
         The cylinder to convert.
 
     Returns
     -------
-    :class:`three.CylinderGeometry`
+    three.CylinderGeometry
 
     Examples
     --------
@@ -462,12 +462,12 @@ def sphere_to_threejs(sphere: Sphere) -> three.SphereGeometry:
 
     Parameters
     ----------
-    sphere : :class:`compas.geometry.Sphere`
+    sphere
         The sphere to convert.
 
     Returns
     -------
-    :class:`three.SphereGeometry`
+    three.SphereGeometry
 
     Examples
     --------
@@ -485,12 +485,12 @@ def torus_to_threejs(torus: Torus) -> three.TorusGeometry:
 
     Parameters
     ----------
-    torus : :class:`compas.geometry.Torus`
+    torus
         The torus to convert.
 
     Returns
     -------
-    :class:`three.TorusGeometry`
+    three.TorusGeometry
         The PyThreeJS torus geometry.
 
     Examples
@@ -516,16 +516,16 @@ def dot_to_threejs(dot: Dot, fontsize: int = 48, color: str = "white") -> three.
 
     Parameters
     ----------
-    dot : :class:`compas_notebook.geometry.Dot`
+    dot
         The dot to convert.
-    fontsize : int, optional
+    fontsize
         Font size for the text texture.
-    color : str, optional
+    color
         Text color.
 
     Returns
     -------
-    :class:`three.Sprite`
+    three.Sprite
         A sprite with text texture positioned at the dot location.
 
     """

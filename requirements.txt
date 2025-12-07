@@ -1,3 +1,0 @@
-compas >= 2.4
-jupyter
-pythreejs

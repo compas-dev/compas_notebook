@@ -10,7 +10,7 @@ class Dot(Geometry):
 
     Parameters
     ----------
-    point : :class:`compas.geometry.Point` | list[float]
+    point
         The location of the dot.
     text : str
         The text to display.
@@ -36,30 +36,14 @@ class Dot(Geometry):
 
     """
 
-    DATASCHEMA = {
-        "type": "object",
-        "properties": {
-            "point": Point.DATASCHEMA,
-            "text": {"type": "string"},
-        },
-        "required": ["point", "text"],
-    }
-
     @property
     def __data__(self):
         return {
-            "point": self._point.__data__,
-            "text": self._text,
+            "point": self.point,
+            "text": self.text,
         }
 
-    @classmethod
-    def __from_data__(cls, data):
-        return cls(
-            point=Point.__from_data__(data["point"]),
-            text=data["text"],
-        )
-
-    def __init__(self, point, text, name=None):
+    def __init__(self, point: Point, text: str, name=None):
         super().__init__(name=name)
         self._point = None
         self._text = None
@@ -75,8 +59,8 @@ class Dot(Geometry):
         return self.point == other.point and self.text == other.text
 
     @property
-    def point(self):
-        return self._point
+    def point(self) -> Point:
+        return self._point  # type: ignore
 
     @point.setter
     def point(self, value):
@@ -85,8 +69,8 @@ class Dot(Geometry):
         self._point = value
 
     @property
-    def text(self):
-        return self._text
+    def text(self) -> str:
+        return self._text  # type: ignore
 
     @text.setter
     def text(self, value):

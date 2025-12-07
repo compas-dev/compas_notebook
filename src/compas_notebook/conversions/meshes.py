@@ -4,19 +4,19 @@ from compas.geometry import Polygon
 from compas.geometry import earclip_polygon
 
 
-def vertices_and_faces_to_threejs(vertices, faces) -> three.BufferGeometry:
+def vertices_and_faces_to_threejs(vertices: list[list[float]], faces: list[list[int]]) -> three.BufferGeometry:
     """Convert vertices and faces to a PyThreeJS geometry.
 
     Parameters
     ----------
-    vertices : list
+    vertices
         List of vertices.
-    faces : list
+    faces
         List of faces.
 
     Returns
     -------
-    :class:`three.BufferGeometry`
+    three.BufferGeometry
         The PyThreeJS geometry.
 
     """
@@ -33,8 +33,8 @@ def vertices_and_faces_to_threejs(vertices, faces) -> three.BufferGeometry:
             for ear in ears:
                 triangles.append([face[index] for index in ear])
 
-    vertices = numpy.array(vertices, dtype=numpy.float32)
-    triangles = numpy.array(triangles, dtype=numpy.uint32).ravel()
+    vertices = numpy.array(vertices, dtype=numpy.float32)  # type: ignore
+    triangles = numpy.array(triangles, dtype=numpy.uint32).ravel()  # type: ignore
 
     geometry = three.BufferGeometry(
         attributes={
@@ -46,24 +46,24 @@ def vertices_and_faces_to_threejs(vertices, faces) -> three.BufferGeometry:
     return geometry
 
 
-def vertices_and_edges_to_threejs(vertices, edges) -> three.BufferGeometry:
+def vertices_and_edges_to_threejs(vertices: list[list[float]], edges: list[tuple[int, int]]) -> three.BufferGeometry:
     """Convert vertices and edges to a PyThreeJS geometry.
 
     Parameters
     ----------
-    vertices : list
+    vertices
         List of vertices.
-    edges : list
+    edges
         List of edges.
 
     Returns
     -------
-    :class:`three.BufferGeometry`
+    three.BufferGeometry
         The PyThreeJS geometry.
 
     """
-    vertices = numpy.array(vertices, dtype=numpy.float32)
-    edges = numpy.array(edges, dtype=numpy.uint32).ravel()
+    vertices = numpy.array(vertices, dtype=numpy.float32)  # type: ignore
+    edges = numpy.array(edges, dtype=numpy.uint32).ravel()  # type: ignore
 
     geometry = three.BufferGeometry(
         attributes={
@@ -75,20 +75,20 @@ def vertices_and_edges_to_threejs(vertices, edges) -> three.BufferGeometry:
     return geometry
 
 
-def vertices_to_threejs(vertices) -> three.BufferGeometry:
+def vertices_to_threejs(vertices: list[list[float]]) -> three.BufferGeometry:
     """Convert vertices to a PyThreeJS geometry.
 
     Parameters
     ----------
-    vertices : list
+    vertices
         List of vertices.
 
     Returns
     -------
-    :class:`three.BufferGeometry`
+    three.BufferGeometry
         The PyThreeJS geometry.
 
     """
-    vertices = numpy.array(vertices, dtype=numpy.float32)
+    vertices = numpy.array(vertices, dtype=numpy.float32)  # type: ignore
     geometry = three.BufferGeometry(attributes={"position": three.BufferAttribute(vertices, normalized=False)})
     return geometry
