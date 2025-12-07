@@ -1,3 +1,3 @@
-from .dot import Dot
+# ruff: noqa: F401
 
-__all__ = ["Dot",] # under protest
+from .dot import Dot

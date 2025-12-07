@@ -110,4 +110,3 @@ def register_scene_objects():
     register(Torus, ThreeTorusObject, context="Notebook")
     register(Vector, ThreeVectorObject, context="Notebook")
     register(list, ThreeGroupObject, context="Notebook")
-

@@ -9,7 +9,7 @@ from .sceneobject import ThreeSceneObject
 class ThreeLineObject(ThreeSceneObject, GeometryObject):
     """Scene object for drawing line."""
 
-    def draw(self)-> list[three.Line]:
+    def draw(self) -> list[three.Line]:
         """Draw the frame associated with the scene object.
 
         Returns

@@ -19,7 +19,6 @@ class ThreeFrameObject(ThreeSceneObject, GeometryObject):
 
         """
 
-
         self._guids = frame_to_threejs(self.geometry)
 
         return self.guids
