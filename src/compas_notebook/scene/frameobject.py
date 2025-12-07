@@ -1,4 +1,3 @@
-import pythreejs as three
 from compas.scene import GeometryObject
 
 from compas_notebook.conversions.geometry import frame_to_threejs

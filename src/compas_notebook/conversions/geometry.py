@@ -1,5 +1,5 @@
-import re
 import math
+
 import numpy
 import pythreejs as three
 from compas.geometry import Box
@@ -18,9 +18,10 @@ from compas.geometry import Sphere
 from compas.geometry import Surface
 from compas.geometry import Torus
 from compas.geometry import Vector
-from compas_notebook.geometry import Dot
+
 from compas_notebook.conversions.meshes import vertices_and_edges_to_threejs
 from compas_notebook.conversions.meshes import vertices_and_faces_to_threejs
+from compas_notebook.geometry import Dot
 
 
 def line_to_threejs(line: Line) -> three.BufferGeometry:
